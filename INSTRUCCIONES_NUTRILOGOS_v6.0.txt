@@ -1,0 +1,232 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                    INSTRUCCIONES NUTRILOGOS v6.0 (HTML)                       ║
+║        Estructura + estilo app en un único documento · Octubre 2026           ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+SUSTITUYE A
+───────────
+- INSTRUCCIONES_PLANTILLA_NUTRILOGOS_v5.0  (estructura, JS, checklist)
+- INSTRUCCIONES_ESTILO_APP_NUTRILOGOS_v1.0 (capa visual app)
+Ambas se conservan en archivo/ solo como histórico. Si algo no está aquí, no es
+estándar. La FUENTE DE VERDAD del CSS y del JavaScript es plantilla/index.html:
+este documento explica reglas y datos; no repite el código.
+
+PROPÓSITO
+─────────
+Que todos los planes HTML de clientes tengan la misma estructura y el aspecto de la
+app de clientes (cliente.html), que los muestra dentro de un <iframe>. El plan es
+un HTML autónomo: lleva su propio CSS y JS (no enlaza a la app).
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 1. ARCHIVOS DE CADA CLIENTE
+
+```
+index.html                              el plan (HTML autónomo, estilo app)
+Logo.png                                icono (apple-touch-icon)
+_headers.txt                            cabeceras de caché (no-cache)
+CLAUDE.md                               contexto del repo y PERFIL MÁSTER del cliente
+INSTRUCCIONES_NUTRILOGOS_v6.0.txt       copia de esta guía (coherencia entre repos)
+```
+- El plan se llama SIEMPRE `index.html` (GitHub Pages lo publica). No hay versión v5.0
+  aparte ni sufijo `_app`.
+- Un repositorio por cliente. Nombre: nombre y apellido en minúsculas y sin espacios
+  (ej.: `borjalucas`).
+- Idioma: español. El plan se redacta en SEGUNDA PERSONA ("tu recuperación", "tus gustos").
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 2. ESTRUCTURA DE index.html (orden fijo)
+
+1. h1 "Planificación Nutricional — [NOMBRE]" + subtítulo (objetivo · estructura · meta)
+2. Objetivo
+3. Impresiones del profesional
+4. Menú semanal de un vistazo (#printArea, tabla generada desde el JS)
+5. Menú desarrollado por días (pestañas)
+6. Lista de compra semanal (pestañas, ítems tachables)
+7. Recetas (acordeón)
+8. OPCIONALES (solo si el cliente los necesita): Suplementación (tras la lista de
+   compra) y Sección personalizada (tras Recetas). Ver Sección 7.
+
+Cada sección: <div style="margin-top:2.5rem;"> + <div class="section-label">.
+Sin <hr>, sin border-top. El único borde inferior es el del .section-label.
+
+FUERA del HTML (la app ya lo muestra, o va al perfil máster de CLAUDE.md):
+descripción del cliente, perfil con métricas (antropometría, bioimpedancia,
+somatotipo), próxima revisión y botones de PDF.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 3. TOKENS Y REGLAS VISUALES
+
+Paleta (definida en :root del CSS de la plantilla)
+  Teal:    --t900 #04342C · --t800 #085041 · --t600 #0F6E56 · --t400 #1D9E75 · --t100 #9FE1CB · --t50 #E1F5EE
+  Dorado:  --gold #B8956A · --gold-dk #7A5A38 · --gold-50 #F5EDE0
+  Grises:  --g900 #1a1a18 · --g700 #444441 · --g500 #5F5E5A · --g400 #6A6963 · --g200 #D3D1C7 · --g100 #F1EFE8
+  Fondos:  --bg #FAFAF8 · --sf #fff · --bd rgba(0,0,0,.09) · --bdm rgba(0,0,0,.15)
+  Pills:   --pill-n #E3DFD2 · --pill-g #C4E8D6 · --pill-au #EAD9BD · Botón: --btn #17805F
+Tipografía: Inter (400/500/600/700), 15px / 1.55. Sin red, cae a la del sistema.
+
+Formas: tarjetas y bloques grandes radio 16px · lista de compra 14px · banners 12px ·
+pills (ingredientes, tags) 20px · pills de DÍAS 8px · badges de la tabla semanal 8px.
+
+Reglas
+1. Títulos de sección (.section-label): 13px · 700 · var(--t800) · mayúsculas · .08em.
+2. h1: 22px · 700 · var(--t900).
+3. Botón imprimir: fondo var(--t900), hover var(--t800), radio 12px.
+4. Día / pill activa: fondo var(--t900), texto blanco.
+5. Sin azul / lila / rosa / morado fuera de la tabla semanal y los puntos de
+   impresiones.
+6. Puntos de impresiones, colores semáforo con significado fijo:
+   verde #1D9E75 logro · azul #185FA5 nueva dirección · ámbar #BA7517 a vigilar ·
+   coral #993C1D alerta / prioridad.
+7. Tabla semanal: estilo original (cabecera azul claro, celdas de color por fila). El
+   bloque `#printArea .badge-*` del CSS restaura los colores originales de sus badges.
+8. Bloque Objetivo: fondo var(--t50), borde .5px var(--t100). Si la dieta es
+   vegetal, redactar "base plant-based" (nunca "100%").
+9. Foco de teclado: outline 2px var(--t400). Respetar prefers-reduced-motion.
+10. @media print intacto (A4 apaisado, solo #printArea).
+
+Badges de comida (listado de días)
+  D Desayuno → gold-50 / gold-dk · A Almuerzo → t50 / t800 · C Comida → pill-g / t900
+  Me Merienda → pill-n / g700 · Ce Cena → t800 / blanco · Libre → pill-au / gold-dk
+Banners de deporte (sportClass)
+  run → gold-50 · fuerza → t50 · crossfit → gold-50 con borde pill-au · rest → g100
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 4. DATOS (los arrays JS de plantilla/index.html)
+
+### 4.1 days[]  (7 días)
+```
+{ short:"Lun", full:"Lunes",
+  sport:"⚽ Entreno 19h",        // emoji + tipo de sesión
+  sportClass:"run",              // run | fuerza | crossfit | rest
+  sportBanner:"Descripción de la sesión y cómo afecta a las comidas",
+  suppl:null,                    // null o string con \n (recordatorio de suplementación)
+  libre:false,                   // true → banner de cena libre
+  meals:[ { type:"C", time:"14:00", name:"Comida", tags:[], desc:"Línea 1\nLínea 2",
+            short:"Resumen corto", note:"Adaptación o consejo", libre:false } ],
+  batchCooking:null }            // opcional: { title, items[], note } (domingo)
+```
+Tipos de comida: D Desayuno · A Almuerzo (media mañana) · C Comida (mediodía) ·
+Me Merienda · Ce Cena. COMIDAS POR DEFECTO: D, A, C, Me, Ce. Quitar las que el
+cliente no haga (A y D son opcionales según cliente) y ajustar la leyenda.
+No confundir nunca A con C.
+
+- `desc`: cada `\n` crea una pill de ingrediente. Cantidades en gramos.
+- `short`: resumen de 2-5 palabras que se muestra en la tabla semanal. Si falta,
+  se usa `name`.
+- `tags`: [] | ["extra"] | ["batch"].
+- Una comida libre lleva `libre:true` y se pinta como "Libre".
+
+### 4.2 Tabla semanal
+La tabla NO se escribe a mano: `buildSummary()` la genera desde `days[]` usando
+`short`. Solo aparecen las filas de las comidas que algún día tiene el cliente.
+Un día sin esa comida muestra "—". Al cambiar una comida: actualizar `short`,
+`desc`, `note` Y la lista de compra.
+
+### 4.3 shopCategories[]
+Cuatro categorías fijas: 🫘 Proteínas (cat-prot) · 🌾 Carbohidratos (cat-carb) ·
+🥑 Grasas (cat-fat) · 🧄 Extras (cat-extra). Cada ítem: { name, qty }.
+
+### 4.4 recetas[]
+{ emoji, nombre, tiempo, raciones, utensilios, ingredientes[], pasos[], tip }.
+La plantilla trae una receta de relleno ("Receta por definir"): sustituirla o, si el
+cliente no tiene recetas, quitar el array y el bloque HTML de Recetas.
+
+### 4.5 Regla de JavaScript
+UN único <script> al final del body. Las funciones (badgeClass, render, buildTabs,
+buildSummary, renderShop, buildShopTabs, buildRecetas, toggleReceta) no se modifican
+por cliente; solo cambian los arrays. Llamadas finales, en este orden:
+buildTabs(); render(); buildSummary(); buildShopTabs(); renderShop(); buildRecetas();
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 5. CLAUDE.md DE CADA CLIENTE
+
+Se crea desde plantilla/CLAUDE.md. Contiene: estado, idioma, archivos, estructura,
+estilo, contexto del cliente, PERFIL MÁSTER (descripción, hábitos, aversiones,
+valoración, antropometría, bioimpedancia, somatotipo, próxima revisión), criterios
+nutricionales, privacidad y reglas de trabajo. Es la fuente de verdad del cliente.
+
+Privacidad: los repos de cliente son públicos (GitHub Pages) y CLAUDE.md también.
+Lo que Guille decida que va ahí es público. Analíticas, hallazgos fuera del ámbito
+nutricional y notas sensibles viven fuera del repo salvo decisión expresa.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 6. PROCESO PARA UN CLIENTE NUEVO
+
+1. Crear un repo VACÍO `nombreapellido` (manual en GitHub, p. ej. público si va a
+   Pages) y darle acceso a la sesión de Claude. Claude no puede crear repos (403).
+2. Dar a Claude: nombre completo, objetivo y contexto conocido.
+3. Claude clona el repo vacío del cliente, copia plantilla/ del repo maestro (con
+   Logo.png), sustituye los marcadores {{...}}, añade una copia de esta guía y hace
+   push a main (git, un solo commit inicial).
+4. (Alternativa si no se puede clonar: Claude sube los archivos de texto con las
+   herramientas de GitHub y el Logo.png se sube a mano arrastrándolo al repo.)
+5. Activar GitHub Pages en el repo (Settings → Pages → rama main).
+6. Probar: `node --check` del <script>, escritorio y móvil (~430 px), impresión.
+7. Tras la consulta: rellenar perfil máster, days[], shopCategories[] y recetas[].
+   Mientras no haya datos, todo "Por definir" y comentario de borrador en el HTML.
+
+Marcadores de la plantilla
+  index.html : {{NOMBRE_CLIENTE}} {{SUBTITULO}} {{OBJETIVO}} {{IMPRESION_TITULO}}
+               {{IMPRESION_TEXTO}}
+  CLAUDE.md  : {{NOMBRE_CLIENTE}} {{REPO}} {{CONTEXTO_CLIENTE}} {{OBJETIVO_CLIENTE}}
+               {{FECHA_CONSULTA}}
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 7. BLOQUES OPCIONALES
+
+### 7.1 Suplementación (solo si aplica; tras la lista de compra)
+```html
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Suplementación recomendada</div>
+  <div class="pn-supl-block">
+    <div class="pn-supl-item"><div class="pn-supl-dot"></div>
+      <div><strong>[SUPLEMENTO]</strong> — [DOSIS, FRECUENCIA Y JUSTIFICACIÓN]</div></div>
+  </div>
+</div>
+```
+
+### 7.2 Sección personalizada (solo si aplica; tras Recetas)
+Para contexto específico: calendario de competición, hidratación deportiva,
+protocolo de recuperación, fases nutricionales, etc. Mismo patrón de sección
+(margin-top:2.5rem + section-label descriptivo) y tarjetas con borde var(--bdm),
+radio 12px. Iconos de estado, con colores de la app:
+  ✅ completado        → fondo var(--t50)      borde var(--t100)
+  🔵 próximo / en curso → fondo var(--gold-50)  borde var(--pill-au)
+  ⬜ pendiente          → fondo var(--g100)     borde var(--g200)
+  ❌ no logrado (con criterio) → fondo #fdf0f0  borde #f4b8b8
+Cada ítem: <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;
+background:[fondo];border:1px solid [borde];border-radius:8px;"> icono (18px) +
+título (13px, 500) + detalle (12px, var(--g400)).
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 8. CHECKLIST ANTES DE ENTREGAR
+
+✓ Archivo `index.html` (sin sufijo); CLAUDE.md, _headers.txt, Logo.png y esta guía en el repo
+✓ <title> y <h1> con el nombre; subtítulo personalizado; sin marcadores {{...}} sin sustituir
+✓ Texto en segunda persona y en español
+✓ Orden: objetivo → impresiones → tabla semanal → menú por días → compra → recetas
+✓ Sin descripción del cliente, perfil con métricas ni próxima revisión en el HTML
+✓ Todos los títulos de sección iguales (13px · 700 · var(--t800)); sin <hr>
+✓ Comidas del cliente correctas (D, A, C, Me, Ce según aplique) y leyenda coherente
+✓ Cada comida con `short`, `desc`, `note`; tabla semanal generada (summaryBody vacío en HTML)
+✓ sportClass válido (run | fuerza | crossfit | rest); tags solo donde corresponde
+✓ Lista de compra con las 4 categorías y coherente con el menú
+✓ Recetas: receta real o bloque retirado; suplementación y sección personalizada solo si aplican
+✓ Objetivo en verde; "base plant-based" (sin "100%") si la dieta es vegetal
+✓ Puntos de impresiones con colores semáforo; sin azul/lila/rosa fuera de la tabla semanal
+✓ JS validado con `node --check`; sin errores de consola
+✓ Revisado en móvil (~430 px) y escritorio; @media print intacto
+✓ Datos sensibles: nada fuera de lo que Guille ha decidido publicar
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+Documento versión 6.0 — Proyecto NUTRILOGOS — Octubre 2026
+Unifica la plantilla v5.0 y el estilo app v1.0 según el flujo de trabajo real.
