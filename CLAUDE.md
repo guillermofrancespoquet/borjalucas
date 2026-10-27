@@ -10,14 +10,13 @@ Planificación nutricional de un cliente de Guille (NutriLogos). **Repo público
 
 ## Archivos
 ```
-index.html                                    plan del cliente (HTML autónomo, estilo app NutriLogos v1.0); se llama index.html para que Pages lo publique
+index.html                                    plan del cliente (HTML autónomo, estilo app NutriLogos); se llama index.html para que Pages lo publique
 Logo.png                                      icono (apple-touch-icon)
 _headers.txt                                  cabeceras de caché (no-cache)
-INSTRUCCIONES_PLANTILLA_NUTRILOGOS_v5.0.txt   plantilla base: estructura HTML, CSS, JS, checklist
-INSTRUCCIONES_ESTILO_APP_NUTRILOGOS_v1.0.txt  capa visual app sobre la v5.0: tokens, CSS completo, checklist
+INSTRUCCIONES_NUTRILOGOS_v6.0.txt            guía unificada: estructura, estilo, datos, proceso y checklist
 CLAUDE.md                                     este archivo
 ```
-- `index.html` = plan ya en estilo app (no hay versión v5.0 aparte ni sufijo `_app`; la regla del sufijo de la guía no aplica aquí).
+- `index.html` = plan ya en estilo app (sin versión aparte ni sufijo `_app`).
 
 ## Estructura de `index.html`
 Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú semanal de un vistazo (`#printArea`) → Menú desarrollado por días → Lista de compra semanal → Recetas.
@@ -28,7 +27,7 @@ Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú se
 - Fuera del HTML (la app ya los muestra): descripción del cliente, perfil con métricas y próxima revisión.
 
 ## Estilo
-- Estructura, JS y reglas: `INSTRUCCIONES_PLANTILLA_NUTRILOGOS_v5.0.txt`. Aspecto: `INSTRUCCIONES_ESTILO_APP_NUTRILOGOS_v1.0.txt` (solo capa visual; prevalece la v1.0 sobre la v5.0).
+- Reglas, datos y checklist: `INSTRUCCIONES_NUTRILOGOS_v6.0.txt` (sustituye a la plantilla v5.0 y al estilo app v1.0). El CSS y el JS están dentro de `index.html`.
 - Tras cualquier cambio: comprobar JS con `node --check` (extrayendo el `<script>`), revisar en móvil (~430 px) y escritorio, y que el `@media print` siga intacto.
 
 ## Contexto del cliente (dado por Guille)
@@ -37,7 +36,7 @@ Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú se
 - Pendiente de la consulta: datos, gustos, aversiones, horarios, estructura de comidas (ahora D, C, Me, Ce de forma provisional), objetivo energético y de macros, y si hace falta suplementación o recetas.
 
 ## Perfil máster (a rellenar tras la primera consulta)
-Documento de referencia del cliente. Rellenar con los datos reales; la guía de la plantilla (secciones 3 y 4) indica qué recoger.
+Documento de referencia del cliente. Rellenar con los datos reales; la guía v6.0 (Sección 5) indica qué recoger.
 - **Descripción:** sexo · edad · talla · peso. Contexto: futbolista, CD Soneja (3RFEF), lesionado por pubalgia. Pendiente: profesión / situación vital.
 - **Hábitos:** tabaco · alcohol · sueño → *por definir*.
 - **Aversiones / exclusiones:** *por definir*.
