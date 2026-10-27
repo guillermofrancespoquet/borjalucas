@@ -1,0 +1,1042 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  INSTRUCCIONES PLANTILLA HTML NUTRILOGOS                      ║
+║              Estandarización visual para todas las planificaciones             ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+ 
+PROPÓSITO
+─────────
+Crear un estándar visual consistente para todas las planificaciones nutricionales
+de clientes en NUTRILOGOS. Cada cliente tendrá su contenido único pero con la
+misma estructura HTML, CSS y distribución visual.
+ 
+Cada planificación consta de estos bloques en orden:
+  1.  Cabecera: título + subtítulo
+  2.  Descripción del cliente (píldoras)
+  3.  Objetivo (bloque azul)
+  4.  Perfil de la persona (métricas, somatotipo, antropometría, bioimpedancia, impresiones)
+  5.  Tabla resumen semanal (vista de un vistazo)
+  6.  Menú desarrollado por días (tabs interactivos)
+  7.  Lista de compra semanal (tabs interactivos con tachado)
+  8.  Suplementación recomendada (si aplica)
+  9.  Recetas (acordeón expandible, si aplica)
+  10. Sección personalizada por cliente (si aplica — ver Sección 10)
+  11. Próxima revisión
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 1. ESTRUCTURA HTML BASE
+ 
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificación Nutricional — [NOMBRE CLIENTE]</title>
+<link rel="apple-touch-icon" href="Logo.png">
+<meta name="apple-mobile-web-app-title" content="NutriLogos">
+<meta name="application-name" content="NutriLogos">
+[INSERTAR CSS AQUÍ — VER SECCIÓN 2]
+</head>
+<body>
+ 
+<h1>Planificación Nutricional — [NOMBRE CLIENTE]</h1>
+<p class="subtitle">[OBJETIVO · ESTRUCTURA · META]</p>
+ 
+[BLOQUE DESCRIPCIÓN — VER SECCIÓN 3]
+[BLOQUE OBJETIVO — VER SECCIÓN 3]
+[BLOQUE PERFIL — VER SECCIÓN 4]
+ 
+[TABLA RESUMEN SEMANAL — VER SECCIÓN 5]
+ 
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Menú desarrollado por días</div>
+  <div class="pn-days" id="dayTabs"></div>
+  <div id="dayView"></div>
+  <div class="pn-legend">
+    <span style="font-size:12px;color:#aaa;margin-right:4px;">Comidas:</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-d">D</span> Desayuno</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-c">C</span> Comida</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-me">Me</span> Merienda</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-ce">Ce</span> Cena</span>
+    <!-- Añadir badge Almuerzo (badge-a) a la leyenda SOLO si el cliente tiene esa comida en su plan -->
+  </div>
+</div>
+ 
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Lista de compra semanal</div>
+  <div class="pn-shop-tabs" id="shopTabs"></div>
+  <div id="shopView"></div>
+</div>
+ 
+<!-- Solo si el cliente tiene suplementación -->
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Suplementación recomendada</div>
+  <div class="pn-supl-block">
+    [ITEMS DE SUPLEMENTACIÓN — VER SECCIÓN 7]
+  </div>
+</div>
+ 
+<!-- Solo si el cliente tiene recetas -->
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Recetas</div>
+  <div id="recetasList"></div>
+</div>
+ 
+<!-- Sección personalizada por cliente — ver Sección 10 -->
+<!-- Incluir SOLO si el cliente tiene necesidades específicas adicionales -->
+<!-- Ej: Pruebas de oposición, competición deportiva, hidratación deportiva, pautas especiales -->
+[SECCIÓN PERSONALIZADA — VER SECCIÓN 10]
+ 
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Próxima revisión</div>
+  <div style="display:flex;align-items:center;gap:14px;background:#fafafa;border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;flex-wrap:wrap;">
+    <div style="font-size:28px;">📅</div>
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:16px;font-weight:500;color:#111;">[FECHA PRÓXIMA REVISIÓN]</div>
+      <div style="font-size:12px;color:#999;margin-top:3px;">Valoración antropométrica + bioimpedancia · Revisión de adherencia y sensaciones · Ajuste de plan si procede</div>
+    </div>
+    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Revisi%C3%B3n+nutricional+%E2%80%94+[NOMBRE_URL]&dates=[FECHA_INICIO_UTC]%2F[FECHA_FIN_UTC]&details=Valoraci%C3%B3n+antropom%C3%A9trica+%2B+bioimpedancia.+Revisi%C3%B3n+de+adherencia+y+sensaciones.+Ajuste+de+plan+si+procede.&location=NutriLogos" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#0d3d4f;color:#fff;text-decoration:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:500;letter-spacing:0.02em;white-space:nowrap;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Añadir al calendario
+    </a>
+  </div>
+</div>
+ 
+[INSERTAR JAVASCRIPT AQUÍ — VER SECCIÓN 6]
+ 
+</body>
+</html>
+```
+ 
+NOTAS IMPORTANTES DE ESTRUCTURA:
+- NO usar <hr> entre secciones. El separador visual es únicamente el border-bottom del .section-label.
+- NO usar border-top ni padding-top en los wrappers de sección. Solo margin-top:2.5rem.
+- El único elemento que tiene borde inferior es .section-label (ver CSS, Sección 2).
+ 
+NOTA BOTÓN CALENDARIO: Si no hay fecha exacta, añadir al enlace `pointer-events:none;opacity:0.4;` para que
+se vea inactivo. Formato de fechas UTC: YYYYMMDDTHHMMSSZ (ej: 20260602T100000Z).
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 2. CSS ESTÁNDAR COMPLETO (No modificar)
+ 
+```css
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #fff; color: #1a1a1a; padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+ 
+  /* ── PLAN SEMANAL ── */
+  .pn-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: 1px solid #ccc; border-radius: 8px; background: transparent; color: #555; cursor: pointer; transition: background 0.15s; }
+  .pn-day-btn:hover { background: #f4f4f4; }
+  .pn-day-btn.active { background: #f0f0f0; color: #111; border-color: #888; font-weight: 500; }
+  .pn-meals { display: grid; gap: 10px; }
+  .pn-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-meal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pn-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .badge-d   { background: #EAF3DE; color: #3B6D11; }
+  .badge-a   { background: #E1F5EE; color: #0F6E56; }
+  .badge-me  { background: #EEEDFE; color: #3C3489; }
+  .badge-c   { background: #FAECE7; color: #993C1D; }
+  .badge-ce  { background: #F3E8FF; color: #6B21A8; }
+  .badge-libre { background: #FBEAF0; color: #993556; }
+  .pn-time { font-size: 12px; color: #aaa; }
+  .pn-name { font-size: 15px; font-weight: 500; color: #111; margin-bottom: 4px; }
+  .pn-note { font-size: 12px; color: #888; border-left: 2px solid #ddd; padding-left: 8px; line-height: 1.5; }
+  .pn-extra-tag { display: inline-block; font-size: 11px; font-weight: 500; background: #E8F5E9; color: #2E7D32; border: 1px solid #A5D6A7; border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-batch-tag  { display: inline-block; font-size: 11px; font-weight: 500; background: #FFF8E1; color: #795700; border: 1px solid #F0D060; border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-sport-banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-sport-banner.fuerza   { background: #E6F1FB; border: 1px solid #B5D4F4; color: #0C447C; }
+  .pn-sport-banner.run      { background: #EAF3DE; border: 1px solid #C0DD97; color: #27500A; }
+  .pn-sport-banner.crossfit { background: #FAEEDA; border: 1px solid #FAC775; color: #633806; }
+  .pn-sport-banner.rest     { background: #F1EFE8; border: 1px solid #D3D1C7; color: #444441; }
+  .pn-libre-banner { background: #FBEAF0; border: 1px solid #F4C0D1; border-radius: 8px; padding: 8px 12px; font-size: 12px; color: #72243E; margin-bottom: 10px; }
+  .pn-supp-banner { background: #F3F0FB; border: 1px solid #C9BFEF; border-radius: 8px; padding: 10px 14px; font-size: 12px; color: #3C2E7A; margin-bottom: 10px; line-height: 1.7; }
+  .pn-batch-section { background: #FFFDE7; border: 1px solid #F0D060; border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .pn-batch-section h3 { font-size: 13px; font-weight: 600; color: #795700; margin-bottom: 8px; }
+  .pn-batch-section ul { padding-left: 1.1rem; font-size: 13px; color: #555; line-height: 1.85; }
+  .pn-batch-section .bc-note { font-size: 12px; color: #888; margin-top: 10px; border-left: 2px solid #F0D060; padding-left: 8px; }
+  .pn-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #e5e5e5; }
+  .pn-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: #777; }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: #777; margin-bottom: 1.5rem; }
+ 
+  /* ── PERFIL DE LA PERSONA ── */
+  .pn-perfil { margin-bottom: 2rem; }
+  .pn-perfil-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.25rem; }
+  .pn-perfil-score { font-size: 12px; font-weight: 500; background: #EAF3DE; color: #3B6D11; border: 1px solid #C0DD97; border-radius: 8px; padding: 2px 10px; }
+  .pn-perfil-sub { font-size: 13px; color: #777; margin-bottom: 1rem; }
+  .pn-perfil-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+  .pn-perfil-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 600px) {
+    .pn-perfil-grid { grid-template-columns: repeat(2, 1fr); }
+    .pn-perfil-grid-2 { grid-template-columns: 1fr; }
+  }
+  .pn-metric { background: #f7f7f7; border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-metric-lbl { font-size: 11px; color: #999; margin-bottom: 3px; }
+  .pn-metric-val { font-size: 18px; font-weight: 500; color: #111; }
+  .pn-metric-sub { font-size: 11px; color: #bbb; margin-top: 2px; }
+  .pn-impresiones { border: 1px solid #e5e5e5; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-impresiones-title { font-size: 12px; font-weight: 500; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .pn-imp-item { font-size: 13px; color: #444; line-height: 1.65; padding: 0.4rem 0; border-bottom: 1px solid #f0f0f0; display: flex; gap: 8px; align-items: flex-start; }
+  .pn-imp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-imp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .pn-imp-dot-green { background: #1D9E75; }
+  .pn-imp-dot-blue  { background: #185FA5; }
+  .pn-imp-dot-amber { background: #BA7517; }
+  .pn-imp-dot-coral { background: #993C1D; }
+  .pn-perfil-divider { border: none; border-top: 1px solid #e5e5e5; margin: 2.5rem 0; }
+  .pn-perfil-section-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  @media (max-width: 600px) { .pn-perfil-section-row { grid-template-columns: 1fr; } }
+  .pn-antro-card { background: #f7f7f7; border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-antro-card-title { font-size: 11px; font-weight: 500; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+  .pn-antro-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid #eee; color: #555; }
+  .pn-antro-row:last-child { border-bottom: none; }
+  .pn-antro-val { font-weight: 500; color: #111; }
+  .pn-bio-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 4px 0; border-bottom: 1px solid #eee; }
+  .pn-bio-row:last-child { border-bottom: none; }
+  .pn-bio-label { color: #777; }
+  .pn-bio-val { font-weight: 500; color: #111; }
+  .pn-bio-badge { font-size: 10px; padding: 1px 7px; border-radius: 6px; font-weight: 500; }
+  .bio-normal { background: #EAF3DE; color: #3B6D11; }
+  .bio-alto   { background: #E6F1FB; color: #185FA5; }
+  .bio-bajo   { background: #FBEAF0; color: #993556; }
+  .pn-soma-card { border: 1px solid #e5e5e5; border-radius: 10px; padding: 0.75rem 1rem; display: flex; align-items: center; }
+  .pn-soma-num { text-align: center; }
+  .pn-soma-num-val { font-size: 22px; font-weight: 500; color: #111; }
+  .pn-soma-num-lbl { font-size: 10px; color: #aaa; margin-top: 2px; }
+  .pn-soma-separator { color: #ddd; font-size: 20px; }
+  .section-label { font-size: 12px; font-weight: 500; color: #666; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ebebeb; }
+ 
+  /* ── LISTA DE COMPRA ── */
+  .pn-shop-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: 1px solid #ccc; border-radius: 8px; background: transparent; color: #555; cursor: pointer; transition: background 0.15s; }
+  .pn-shop-btn:hover { background: #f4f4f4; }
+  .pn-shop-btn.active { background: #f0f0f0; color: #111; border-color: #888; font-weight: 500; }
+  .pn-shop-btn.active.cat-prot  { background: #E6F1FB; border-color: #B5D4F4; color: #0C447C; }
+  .pn-shop-btn.active.cat-carb  { background: #FAEEDA; border-color: #FAC775; color: #633806; }
+  .pn-shop-btn.active.cat-fat   { background: #EAF3DE; border-color: #C0DD97; color: #27500A; }
+  .pn-shop-btn.active.cat-extra { background: #F1EFE8; border-color: #D3D1C7; color: #444441; }
+  .pn-shop-list { display: grid; gap: 8px; }
+  .pn-shop-item { border: 1px solid #e5e5e5; border-radius: 10px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+  .pn-shop-item.cat-prot  { background: #f5f9fe; }
+  .pn-shop-item.cat-carb  { background: #fefaf5; }
+  .pn-shop-item.cat-fat   { background: #f6fbf2; }
+  .pn-shop-item.cat-extra { background: #f8f8f6; }
+  .pn-shop-item:hover { filter: brightness(0.97); }
+  .pn-shop-item.done { opacity: 0.38; }
+  .pn-shop-item.done .pn-shop-item-name { text-decoration: line-through; color: #aaa; }
+  .pn-shop-item-name { font-size: 13px; font-weight: 500; color: #111; }
+  .pn-shop-item-qty { font-size: 12px; font-weight: 500; color: #555; white-space: nowrap; text-align: right; }
+ 
+  /* ── INGREDIENTES ENCAPSULADOS EN COMIDAS ── */
+  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pn-ing { display: inline-block; font-size: 12px; background: #f4f4f4; border: 1px solid #e8e8e8; border-radius: 6px; padding: 3px 9px; color: #444; line-height: 1.4; }
+ 
+  /* ── SUPLEMENTACIÓN ── */
+  .pn-supl-block { background: #F3F0FB; border: 1px solid #C9BFEF; border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-supl-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid #DDD8F5; font-size: 13px; color: #333; line-height: 1.5; }
+  .pn-supl-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-supl-dot { width: 6px; height: 6px; border-radius: 50%; background: #7C5CBF; flex-shrink: 0; margin-top: 6px; }
+ 
+  /* ── RECETAS ── */
+  .pn-receta { border: 1px solid #e5e5e5; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+  .pn-receta-header { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; cursor: pointer; background: #fafafa; transition: background 0.15s; user-select: none; }
+  .pn-receta-header:hover { background: #f3f3f3; }
+  .pn-receta-title { font-size: 14px; font-weight: 500; color: #111; display: flex; align-items: center; gap: 8px; }
+  .pn-receta-arrow { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+  .pn-receta.open .pn-receta-arrow { transform: rotate(90deg); }
+  .pn-receta-body { display: none; padding: 1rem 1.25rem; border-top: 1px solid #e5e5e5; background: #fff; }
+  .pn-receta.open .pn-receta-body { display: block; }
+  .pn-receta-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-receta-meta-pill { font-size: 11px; background: #f4f4f4; border: 1px solid #e8e8e8; border-radius: 6px; padding: 3px 10px; color: #555; }
+  .pn-receta-section { font-size: 11px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; margin-top: 0.85rem; }
+  .pn-receta-ings { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem; }
+  .pn-receta-ing { font-size: 12px; background: #f4f4f4; border: 1px solid #e8e8e8; border-radius: 6px; padding: 3px 10px; color: #444; }
+  .pn-receta-steps { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .pn-receta-step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #444; line-height: 1.55; }
+  .pn-receta-step-num { min-width: 22px; height: 22px; border-radius: 50%; background: #f0f0f0; border: 1px solid #e0e0e0; font-size: 11px; font-weight: 600; color: #666; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .pn-receta-tip { font-size: 12px; color: #888; border-left: 2px solid #ddd; padding-left: 8px; margin-top: 0.75rem; line-height: 1.5; }
+ 
+  /* ── BOTÓN IMPRIMIR ── */
+  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: #0d3d4f; color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .pn-print-btn:hover { background: #0f4d63; }
+ 
+  /* ── IMPRESIÓN ── */
+  @media print {
+    @page { size: A4 landscape; margin: 1cm 1.2cm; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body > * { display: none !important; }
+    #printArea { display: block !important; }
+    #printArea {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex !important; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0.5cm; box-sizing: border-box;
+    }
+    #printArea .section-label { font-size: 14px !important; margin-bottom: 0.5rem !important; color: #333 !important; }
+    #printArea table { width: 100% !important; min-width: unset !important; font-size: 11px !important; border-collapse: collapse !important; }
+    #printArea th { padding: 8px 6px !important; font-size: 10px !important; }
+    #printArea td { padding: 10px 8px !important; font-size: 11px !important; line-height: 1.4 !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .pn-print-btn { display: none !important; }
+    #printArea { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+```
+ 
+CAMBIOS CSS v5.0 respecto a v4.2:
+- .section-label: margin-bottom 0.85rem → 1rem; padding-bottom 0.4rem → 0.5rem; border-bottom #e8e8e8 → #ebebeb
+- .pn-perfil-divider: margin 1.5rem 0 → 2.5rem 0 (se mantiene en CSS pero NO se usa en el HTML — ver Sección 1)
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 3. BLOQUES DESCRIPCIÓN Y OBJETIVO
+ 
+Insertar justo después del `.subtitle` y antes del perfil:
+ 
+```html
+<!-- BLOQUE DESCRIPCIÓN CLIENTE -->
+<div style="border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;background:#fafafa;">
+  <div style="font-size:11px;font-weight:600;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.75rem;">Descripción del cliente</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Perfil</span>
+      [SEXO] · [EDAD] años · [TALLA] cm · [PESO] kg
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Contexto</span>
+      [PROFESIÓN / SITUACIÓN VITAL]
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Objetivo</span>
+      [OBJETIVO PRINCIPAL]
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Hábitos</span>
+      [TABACO · ALCOHOL · SUEÑO]
+    </div>
+    <div style="background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:6px 12px;font-size:12px;color:#333;">
+      <span style="color:#999;font-size:10px;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:2px;">Aversiones / exclusiones</span>
+      [ALIMENTOS EXCLUIDOS]
+    </div>
+  </div>
+</div>
+ 
+<!-- BLOQUE OBJETIVO -->
+<div style="background:#EBF3FB;border:1.5px solid #A8C8E8;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:11px;font-weight:600;color:#1a4a72;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Objetivo</div>
+  <p style="font-size:14px;font-weight:600;color:#0C3358;line-height:1.65;">[DESCRIPCIÓN DESARROLLADA DEL OBJETIVO DEL CLIENTE]</p>
+</div>
+```
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 4. BLOQUE PERFIL DE LA PERSONA
+ 
+### 4.1 Colores semánticos de las impresiones
+- pn-imp-dot-green → positivo, logro, mejora
+- pn-imp-dot-blue  → cambio de objetivo, nueva dirección
+- pn-imp-dot-amber → punto a vigilar, atención moderada
+- pn-imp-dot-coral → alerta, prioridad de intervención
+ 
+### 4.2 Badges de bioimpedancia
+- bio-normal → dentro del rango normal
+- bio-alto   → por encima del rango
+- bio-bajo   → por debajo del rango o deficiente
+ 
+### 4.3 Somatotipo — estructura correcta (inline, sin clase pn-soma-card)
+El somatotipo usa un div con estilos inline completos para evitar conflictos con el CSS base:
+ 
+```html
+<div style="flex:1;min-width:200px;border:1px solid #e5e5e5;border-radius:10px;padding:0.75rem 1rem;display:flex;flex-direction:column;gap:10px;overflow:hidden;">
+  <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:4px;width:100%;min-width:0;">
+    <div style="text-align:center;min-width:0;">
+      <div style="font-size:22px;font-weight:500;color:#111;">[ENDO]</div>
+      <div style="font-size:10px;color:#aaa;margin-top:2px;">Endomorfia</div>
+    </div>
+    <div style="color:#ddd;font-size:20px;text-align:center;">—</div>
+    <div style="text-align:center;min-width:0;">
+      <div style="font-size:22px;font-weight:500;color:#185FA5;">[MESO]</div>
+      <div style="font-size:10px;color:#aaa;margin-top:2px;">Mesomorfia</div>
+    </div>
+    <div style="color:#ddd;font-size:20px;text-align:center;">—</div>
+    <div style="text-align:center;min-width:0;">
+      <div style="font-size:22px;font-weight:500;color:#111;">[ECTO]</div>
+      <div style="font-size:10px;color:#aaa;margin-top:2px;">Ectomorfia</div>
+    </div>
+  </div>
+  <div style="text-align:center;border-top:1px solid #f0f0f0;padding-top:8px;">
+    <div style="font-size:13px;font-weight:500;color:#185FA5;">[CLASIFICACIÓN SOMATOTIPO]</div>
+    <div style="font-size:11px;color:#aaa;">Valoración actual</div>
+  </div>
+</div>
+```
+ 
+### 4.4 Botones de documentos PDF (OPCIONAL)
+ 
+Insertar ENTRE `<p class="pn-perfil-sub">` y la primera `<div class="pn-perfil-grid">`.
+Usar SOLO cuando el cliente tiene PDFs adjuntos (antropometría, bioimpedancia, analítica, etc.).
+Los archivos deben estar en la carpeta `./assets/` junto al HTML.
+ 
+SVG de icono de archivo (el mismo en todos los botones — copiar exactamente):
+```
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+```
+ 
+Estilo del botón (fondo teal oscuro — coherente con botón "Añadir al calendario"):
+```
+display:inline-flex;align-items:center;gap:7px;background:#0d3d4f;color:#fff;text-decoration:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:500;letter-spacing:0.02em;white-space:nowrap;
+```
+ 
+HTML completo del bloque de botones:
+```html
+<!-- OPCIONAL: Botones de documentos — solo si existen PDFs adjuntos para este cliente -->
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;">
+  <a href="./assets/[NOMBRE_ANTRO].pdf" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#0d3d4f;color:#fff;text-decoration:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:500;letter-spacing:0.02em;white-space:nowrap;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    Antropometría [FECHA]
+  </a>
+  <a href="./assets/[NOMBRE_BIO].pdf" target="_blank" style="display:inline-flex;align-items:center;gap:7px;background:#0d3d4f;color:#fff;text-decoration:none;border-radius:10px;padding:9px 18px;font-size:13px;font-weight:500;letter-spacing:0.02em;white-space:nowrap;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    Bioimpedancia [FECHA]
+  </a>
+  <!-- Añadir más botones si hay otros documentos: analítica, informe médico, etc. -->
+  <!-- Si no hay PDFs para este cliente, eliminar todo este bloque -->
+</div>
+```
+ 
+Convención de nombres de archivo recomendada:
+- `Antropometría [APELLIDO] [DD-MM-YYYY].pdf`
+- `Bioimpedancia [APELLIDO] [DD-MM-YYYY].pdf`
+ 
+### 4.5 HTML completo del bloque perfil
+ 
+NOTAS DE ESPACIADO INTERNO (v5.0):
+- pn-perfil-grid-2: añadir style="margin-bottom:1.75rem"
+- Somatotipo: wrapper con style="margin-top:2rem;margin-bottom:1.75rem"
+- pn-perfil-section-row: añadir style="margin-top:1.75rem"
+- Impresiones: wrapper con style="margin-top:1.75rem"
+- pn-antro-card secundarias: style="margin-top:0.85rem" (no margin-top:10px)
+ 
+```html
+<div class="pn-perfil">
+ 
+  <div class="pn-perfil-header">
+    <span style="font-size:15px;font-weight:500;color:#111">Perfil de la persona</span>
+    <span class="pn-perfil-score">Condición física [PUNTUACIÓN] / 100</span>
+  </div>
+  <p class="pn-perfil-sub">[NOMBRE COMPLETO] · [EDAD] años · [SEXO] · Valorado el [FECHA] por [PROFESIONAL]</p>
+ 
+  <!-- OPCIONAL: Botones de documentos PDF — ver Sección 4.4 -->
+  <!-- Solo incluir si el cliente tiene PDFs adjuntos -->
+ 
+  <div class="pn-perfil-grid" style="margin-bottom:10px">
+    <div class="pn-metric"><div class="pn-metric-lbl">Peso actual</div><div class="pn-metric-val">[PESO] kg</div><div class="pn-metric-sub">IMC [IMC] · [CLASIFICACIÓN]</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Talla / envergadura</div><div class="pn-metric-val">[TALLA] / [ENVERGADURA] cm</div><div class="pn-metric-sub">[TIPO CORPORAL] · E. relativa [VALOR]</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">% Masa grasa (Yuhasz)</div><div class="pn-metric-val">[%GRASA] %</div><div class="pn-metric-sub">[KG GRASA] kg · Σ6 pliegues: [VALOR] mm</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">% Masa muscular</div><div class="pn-metric-val">[%MUSCULAR] %</div><div class="pn-metric-sub">[KG MUSCULAR] kg · Z Phantom [VALOR]</div></div>
+  </div>
+  <div class="pn-perfil-grid-2" style="margin-bottom:1.75rem">
+    <div class="pn-metric"><div class="pn-metric-lbl">LBM (masa libre de grasa)</div><div class="pn-metric-val">[KG LBM] kg</div><div class="pn-metric-sub">Músculo esquelético: [KG MUSCULO] kg</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">TMB (bioimpedancia)</div><div class="pn-metric-val">[TMB] kcal</div><div class="pn-metric-sub">Edad metabólica: [EDAD METABOLICA] años</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">% Tejido adiposo</div><div class="pn-metric-val">[%ADIPOSO] %</div><div class="pn-metric-sub">[KG ADIPOSO] kg (Ross y Kerr, 1993)</div></div>
+    <div class="pn-metric"><div class="pn-metric-lbl">Ratio cintura / cadera</div><div class="pn-metric-val">[RATIO]</div><div class="pn-metric-sub">[RIESGO CARDIOVASCULAR]</div></div>
+  </div>
+ 
+  <!-- Somatotipo -->
+  <div style="margin-top:2rem;margin-bottom:1.75rem">
+    <div class="section-label">Somatotipo (Carter-Heath)</div>
+    <div style="display:flex;gap:10px;align-items:stretch;flex-wrap:wrap">
+      [BLOQUE SOMATOTIPO INLINE — VER SECCIÓN 4.3]
+      <div class="pn-metric" style="flex:1;min-width:200px">
+        <div class="pn-metric-lbl">Valoración previa ([FECHA PREVIA])</div>
+        <div style="font-size:14px;font-weight:500;color:#555;margin-top:4px">[ENDO P] — [MESO P] — [ECTO P]</div>
+        <div class="pn-metric-sub">[DESCRIPCIÓN CAMBIOS]</div>
+      </div>
+      <div class="pn-metric" style="flex:1;min-width:200px">
+        <div class="pn-metric-lbl">Grupo de referencia (ISAK)</div>
+        <div style="font-size:14px;font-weight:500;color:#555;margin-top:4px">[ENDO R] — [MESO R] — [ECTO R]</div>
+        <div class="pn-metric-sub">[POSICIÓN RESPECTO AL GRUPO]</div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Antropometría + Bioimpedancia -->
+  <div class="pn-perfil-section-row" style="margin-top:1.75rem">
+    <div>
+      <div class="section-label">Datos antropométricos clave</div>
+      <div class="pn-antro-card">
+        <div class="pn-antro-card-title">Pliegues cutáneos</div>
+        <div class="pn-antro-row"><span>Tríceps</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Subescapular</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Bíceps</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Cresta ilíaca</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Supraespinal</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Abdominal</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Muslo</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row"><span>Pierna</span><span class="pn-antro-val">[V] mm</span></div>
+        <div class="pn-antro-row" style="margin-top:4px;padding-top:6px;border-top:1px solid #ddd"><span style="font-weight:500">Σ6 pliegues</span><span class="pn-antro-val" style="color:#185FA5">[V] mm</span></div>
+        <div class="pn-antro-row"><span style="font-weight:500">Σ8 pliegues</span><span class="pn-antro-val">[V] mm</span></div>
+      </div>
+      <div class="pn-antro-card" style="margin-top:0.85rem">
+        <div class="pn-antro-card-title">Perímetros</div>
+        <div class="pn-antro-row"><span>Cintura</span><span class="pn-antro-val">[V] cm</span></div>
+        <div class="pn-antro-row"><span>Cadera</span><span class="pn-antro-val">[V] cm</span></div>
+        <div class="pn-antro-row"><span>Brazo relajado / contraído</span><span class="pn-antro-val">[V] / [V] cm</span></div>
+        <div class="pn-antro-row"><span>Muslo / pierna</span><span class="pn-antro-val">[V] / [V] cm</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">Datos bioimpedancia</div>
+      <div class="pn-antro-card">
+        <div class="pn-antro-card-title">Composición corporal</div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Agua corporal</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] L</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Proteína</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] kg</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Masa ósea</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] kg</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Masa grasa corporal</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] kg</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">% Grasa (PBF)</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] %</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Músculo esquelético</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V] kg</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Grasa visceral</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">Nivel [V]</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div></div>
+      </div>
+      <div class="pn-antro-card" style="margin-top:0.85rem">
+        <div class="pn-antro-card-title">Fuerza y equilibrio muscular</div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Fuerza superior</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Fuerza inferior</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Equilibrio superior</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">Equilibrio inferior</span><span class="pn-bio-badge bio-[E]">[TEXTO]</span></div>
+        <div class="pn-bio-row"><span class="pn-bio-label">IMC</span><div style="display:flex;gap:6px;align-items:center"><span class="pn-bio-val">[V]</span><span class="pn-bio-badge bio-normal">Normal</span></div></div>
+      </div>
+      <!-- NOTA v5.0: El bloque "Control de peso (objetivo)" ha sido ELIMINADO.
+           Esta información se puede incluir en el bloque Objetivo (Sección 3)
+           o en las Impresiones del profesional si es relevante. -->
+    </div>
+  </div>
+ 
+  <!-- Impresiones del profesional -->
+  <div style="margin-top:1.75rem">
+    <div class="section-label">Impresiones del profesional</div>
+    <div class="pn-impresiones">
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-green"></div><div><strong>[TÍTULO]</strong> [DESARROLLO]</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>[TÍTULO]</strong> [DESARROLLO]</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>[TÍTULO]</strong> [DESARROLLO]</div></div>
+      <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-coral"></div><div><strong>[TÍTULO]</strong> [DESARROLLO]</div></div>
+    </div>
+  </div>
+ 
+</div>
+```
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 5. TABLA RESUMEN SEMANAL
+ 
+Insertar directamente después del bloque perfil (div.pn-perfil).
+El id="printArea" es obligatorio para que el botón de imprimir funcione correctamente.
+NO precede un <hr> ni border-top. Solo margin-bottom:2rem en el wrapper.
+ 
+```html
+<div style="margin-bottom:2rem" id="printArea">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;padding-bottom:0.4rem;border-bottom:1px solid #e8e8e8;">
+    <div style="font-size:12px;font-weight:500;color:#666;text-transform:uppercase;letter-spacing:0.06em;">Menú semanal de un vistazo &nbsp;·&nbsp; [FECHAS SEMANA]</div>
+    <button class="pn-print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid #e5e5e5;">
+    <table style="width:100%;border-collapse:collapse;min-width:700px;font-size:12px;">
+      <thead>
+        <tr>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;width:46px;"></th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Lunes</th>
+          <!-- Repetir para cada día -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Fila Desayuno -->
+        <tr>
+          <td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;">
+            <span class="pn-badge badge-d" style="display:inline-block;">D</span>
+          </td>
+          <td style="background:#f9fcf5;padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;color:#333;line-height:1.4;">[DESAYUNO LUNES]</td>
+          <!-- Repetir para cada día -->
+        </tr>
+        <!-- Fila Comida: badge-c, fondo #f3fdf8 -->
+        <!-- Fila Merienda: badge-me, fondo #f5f3ff -->
+        <!-- Fila Cena: badge-ce, fondo #fdf8ff -->
+        <!-- Cena libre: background:#fbeaf0;color:#72243E;font-style:italic → texto "Libre" -->
+        <!-- Sin comida (ej. domingo sin merienda): color:#aaa;font-style:italic → texto "—" -->
+      </tbody>
+    </table>
+  </div>
+  <!-- Leyenda -->
+  <div class="pn-legend" style="margin-top:1rem;padding-top:0.75rem;border-top:1px solid #e5e5e5;">
+    <span style="font-size:12px;color:#aaa;margin-right:4px;">Leyenda:</span>
+    <!-- [ITEMS DE LEYENDA según las comidas del cliente] -->
+  </div>
+</div>
+```
+ 
+Colores de fondo por fila:
+- Desayuno (D):  #f9fcf5
+- Comida (C):    #f3fdf8
+- Merienda (Me): #f5f3ff
+- Cena (Ce):     #fdf8ff
+- Libre:         #fbeaf0 · color #72243E · italic
+- Sin comida:    color #aaa · italic · texto "—"
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 6. JAVASCRIPT COMPLETO
+ 
+REGLA CRÍTICA: Todo el JavaScript va en UN ÚNICO bloque <script> al final del body.
+Las llamadas buildTabs(), render(), buildShopTabs(), renderShop() y buildRecetas()
+van ANTES del cierre </script>, DESPUÉS de que todo el HTML esté cargado.
+El HTML de la lista de compra (#shopTabs, #shopView) debe estar en el body
+ANTES del <script> que llama a buildShopTabs() y renderShop().
+ 
+### 6.1 Array days
+ 
+```javascript
+const days = [
+  {
+    short: "Lun",           // 2-3 chars. "Sáb ★" si hay cena libre
+    full: "Lunes",
+    sport: "🏃 Rodaje",     // emoji + tipo de sesión
+    sportClass: "run",      // run | fuerza | crossfit | rest
+    sportBanner: "[DESCRIPCIÓN DE LA SESIÓN. Añadir kcal y/o macros de forma explícita SOLO si aporta valor para ese cliente concreto — no es obligatorio, decisión del profesional caso por caso]",
+    suppl: null,            // null o string con \n — solo domingo con recordatorio
+    libre: false,           // true activa el banner de cena libre
+    meals: [
+      {
+        type: "D",          // D | A | C | Me | Ce  (A = Almuerzo/media mañana, OPCIONAL, solo si el cliente la lleva)
+        time: "7:00–8:30",
+        name: "[NOMBRE COMIDA]",
+        tags: [],           // [] | ["extra"] | ["batch"]
+        desc: "[LÍNEA 1]\n[LÍNEA 2 — cada \n crea una pill separada]",
+        note: "[ADAPTACIÓN O CONSEJO]",
+        libre: false        // true solo en comidas libres
+      }
+    ],
+    batchCooking: null      // null o { title, items[], note }
+  }
+];
+```
+ 
+Tipos de comida:
+- D  → Desayuno  · badge-d  · verde   #EAF3DE / #3B6D11
+- A  → Almuerzo  · badge-a  · teal    #E1F5EE / #0F6E56  (comida de media mañana, OPCIONAL — usar solo si el cliente la necesita)
+- C  → Comida    · badge-c  · naranja #FAECE7 / #993C1D  (mediodía)
+- Me → Merienda  · badge-me · morado  #EEEDFE / #3C3489
+- Ce → Cena      · badge-ce · lila    #F3E8FF / #6B21A8  (noche)
+IMPORTANTE: A es media mañana (opcional, no todos los clientes la llevan), C es mediodía, Ce es noche. No confundir nunca A con C.
+ 
+sportClass y colores:
+- run      → verde   #EAF3DE
+- fuerza   → azul    #E6F1FB
+- crossfit → naranja #FAEEDA
+- rest     → gris    #F1EFE8
+ 
+### 6.2 Array shopCategories
+ 
+```javascript
+const shopCategories = [
+  { label: "🫘 Proteínas",     cls: "cat-prot",  items: [ { name: "[ALIMENTO]", qty: "[CANTIDAD]" } ] },
+  { label: "🌾 Carbohidratos", cls: "cat-carb",  items: [ { name: "[ALIMENTO]", qty: "[CANTIDAD]" } ] },
+  { label: "🥑 Grasas",        cls: "cat-fat",   items: [ { name: "[ALIMENTO]", qty: "[CANTIDAD]" } ] },
+  { label: "🧄 Extras",        cls: "cat-extra", items: [ { name: "[ALIMENTO]", qty: "[CANTIDAD]" } ] }
+];
+```
+ 
+### 6.3 Array recetas (solo si el cliente las necesita)
+ 
+```javascript
+const recetas = [
+  {
+    emoji: "🥞",
+    nombre: "[NOMBRE RECETA]",
+    tiempo: "⏱ [X] min",
+    raciones: "🍽 [X] persona/s",
+    utensilios: "🔥 [UTENSILIO PRINCIPAL]",
+    ingredientes: [ "[INGREDIENTE 1 CON CANTIDAD]", "[INGREDIENTE 2]" ],
+    pasos: [ "[PASO 1]", "[PASO 2]" ],
+    tip: "💡 [CONSEJO O VARIACIÓN]"
+  }
+];
+```
+ 
+Si el cliente no tiene recetas, omitir el array y el bloque HTML de recetas.
+ 
+### 6.4 Funciones JavaScript (copiar exactamente, no modificar)
+ 
+```javascript
+<script>
+// ── ARRAYS DE DATOS ──
+// const days = [ ... ]
+// const shopCategories = [ ... ]
+// const recetas = [ ... ]  ← solo si aplica
+ 
+function badgeClass(type, libre) {
+  if (libre) return "badge-libre";
+  const map = { D:"badge-d", A:"badge-a", Me:"badge-me", C:"badge-c", Ce:"badge-ce" };
+  return map[type] || "badge-c";
+}
+function badgeLabel(type, libre) {
+  if (libre) return "Libre";
+  const map = { D:"Desayuno", A:"Almuerzo", Me:"Merienda", C:"Comida", Ce:"Cena" };
+  return map[type] || type;
+}
+ 
+let current = 0;
+ 
+function render() {
+  const d = days[current];
+  let html = `<div style="font-size:18px;font-weight:500;color:#111;margin-bottom:8px">${d.full}</div>`;
+  html += `<div class="pn-sport-banner ${d.sportClass}">${d.sport} — ${d.sportBanner}</div>`;
+  if (d.libre) html += `<div class="pn-libre-banner">La cena de este día está reservada como comida libre. El resto del día mantiene la base vegetal habitual.</div>`;
+  if (d.suppl) html += `<div class="pn-supp-banner">` + d.suppl.replace(/\n/g,"<br>") + `</div>`;
+  if (d.batchCooking) {
+    const bc = d.batchCooking;
+    const items = bc.items.map(i => `<li>${i}</li>`).join("");
+    html += `<div class="pn-batch-section"><h3>${bc.title}</h3><ul>${items}</ul><div class="bc-note">⏱ ${bc.note}</div></div>`;
+  }
+  html += `<div class="pn-meals">`;
+  d.meals.forEach(m => {
+    const bc = badgeClass(m.type, m.libre);
+    const bl = badgeLabel(m.type, m.libre);
+    let tagsHtml = "";
+    if (m.tags && m.tags.includes("extra")) tagsHtml += `<span class="pn-extra-tag">🥡 Hacer cantidad extra</span> `;
+    if (m.tags && m.tags.includes("batch")) tagsHtml += `<span class="pn-batch-tag">♻️ Usar del batch cooking</span> `;
+    const rawParts = m.desc.split(/\n/).map(s => s.trim()).filter(s => s.length > 0);
+    let ingsHtml = rawParts.map(part => `<span class="pn-ing">${part}</span>`).join("");
+    html += `
+      <div class="pn-card">
+        <div class="pn-meal-header">
+          <span class="pn-badge ${bc}">${bl}</span>
+          <span class="pn-time">${m.time}</span>
+        </div>
+        ${tagsHtml ? `<div style="margin-bottom:6px">${tagsHtml}</div>` : ""}
+        <div class="pn-name">${m.name}</div>
+        <div class="pn-ing-list">${ingsHtml}</div>
+        <div class="pn-note">Adaptación: ${m.note}</div>
+      </div>`;
+  });
+  html += `</div>`;
+  document.getElementById("dayView").innerHTML = html;
+}
+ 
+function buildTabs() {
+  const container = document.getElementById("dayTabs");
+  days.forEach((d, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-day-btn" + (i === 0 ? " active" : "");
+    btn.textContent = d.short;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-day-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      current = i;
+      render();
+    };
+    container.appendChild(btn);
+  });
+}
+ 
+let shopCurrent = 0;
+ 
+function renderShop() {
+  const cat = shopCategories[shopCurrent];
+  let html = '<div class="pn-shop-list">';
+  cat.items.forEach(item => {
+    html += `<div class="pn-shop-item ${cat.cls}" onclick="this.classList.toggle('done')">
+      <div class="pn-shop-item-name">${item.name}</div>
+      <div class="pn-shop-item-qty">${item.qty}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById("shopView").innerHTML = html;
+}
+ 
+function buildShopTabs() {
+  const container = document.getElementById("shopTabs");
+  shopCategories.forEach((cat, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-shop-btn " + cat.cls + (i === 0 ? " active" : "");
+    btn.textContent = cat.label;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-shop-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      shopCurrent = i;
+      renderShop();
+    };
+    container.appendChild(btn);
+  });
+}
+ 
+function buildRecetas() {
+  if (typeof recetas === "undefined" || !recetas.length) return;
+  const container = document.getElementById("recetasList");
+  if (!container) return;
+  recetas.forEach((r, i) => {
+    const div = document.createElement("div");
+    div.className = "pn-receta";
+    div.innerHTML = `
+      <div class="pn-receta-header" onclick="toggleReceta(${i})">
+        <div class="pn-receta-title">${r.emoji} ${r.nombre}</div>
+        <span class="pn-receta-arrow">▸</span>
+      </div>
+      <div class="pn-receta-body">
+        <div class="pn-receta-meta">
+          <span class="pn-receta-meta-pill">${r.tiempo}</span>
+          <span class="pn-receta-meta-pill">${r.raciones}</span>
+          <span class="pn-receta-meta-pill">${r.utensilios}</span>
+        </div>
+        <div class="pn-receta-section">🧺 Ingredientes</div>
+        <div class="pn-receta-ings">${r.ingredientes.map(ing => `<span class="pn-receta-ing">${ing}</span>`).join("")}</div>
+        <div class="pn-receta-section">👨‍🍳 Elaboración</div>
+        <ol class="pn-receta-steps">${r.pasos.map((p,n) => `<li class="pn-receta-step"><span class="pn-receta-step-num">${n+1}</span><span>${p}</span></li>`).join("")}</ol>
+        <div class="pn-receta-tip">${r.tip}</div>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+ 
+function toggleReceta(i) {
+  const cards = document.querySelectorAll(".pn-receta");
+  cards[i].classList.toggle("open");
+}
+ 
+buildTabs();
+render();
+buildShopTabs();
+renderShop();
+buildRecetas();
+</script>
+```
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 7. SUPLEMENTACIÓN (Solo si el cliente la necesita)
+ 
+```html
+<div class="pn-supl-block">
+  <div class="pn-supl-item">
+    <div class="pn-supl-dot"></div>
+    <div><strong>[NOMBRE SUPLEMENTO]</strong> — [DOSIS, FRECUENCIA Y JUSTIFICACIÓN]</div>
+  </div>
+  <!-- Añadir o quitar items según cliente -->
+</div>
+```
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 8. CHECKLIST ANTES DE ENTREGAR
+ 
+✓ Metatags de icono y nombre en <head> (Logo.png, NutriLogos)
+✓ Nombre cliente en <title> y <h1>
+✓ Subtítulo personalizado
+✓ Bloque descripción con las 5 píldoras rellenadas (incluyendo aversiones)
+✓ Bloque objetivo con texto desarrollado
+✓ Perfil de la persona completo (métricas, somatotipo, antro, bioimpedancia, impresiones)
+✓ Somatotipo con div inline (no usar clase pn-soma-card)
+✓ NO hay <hr> entre secciones — separadores eliminados de v5.0
+✓ NO hay border-top ni padding-top en wrappers de sección — solo margin-top:2.5rem
+✓ pn-perfil-grid-2 con style="margin-bottom:1.75rem"
+✓ Somatotipo wrapper con style="margin-top:2rem;margin-bottom:1.75rem"
+✓ pn-perfil-section-row con style="margin-top:1.75rem"
+✓ Impresiones wrapper con style="margin-top:1.75rem"
+✓ pn-antro-card secundarias con style="margin-top:0.85rem"
+✓ NO hay bloque "Control de peso (objetivo)" — eliminado en v5.0
+✓ Títulos de bioimpedancia: "Datos bioimpedancia" sin marca
+✓ Botones de documentos PDF incluidos si hay archivos adjuntos (ver Sección 4.4) — eliminar el bloque si no aplica
+✓ Tabla resumen dentro de id="printArea" con style="margin-bottom:2rem"
+✓ Array days correcto: sportClass coincide con CSS, Ce para cena, C para comida mediodía
+✓ Tags ["extra"] / ["batch"] solo donde corresponde
+✓ Batch cooking en domingo si aplica (siempre opcional)
+✓ suppl en domingo del array days si aplica (con \n para saltos de línea)
+✓ Lista de compra con 4 categorías y emojis (🫘 🌾 🥑 🧄)
+✓ Suplementación solo si el cliente la necesita
+✓ Recetas solo si el cliente las necesita (buildRecetas comprueba si existe el array)
+✓ Sección personalizada por cliente si aplica (ver Sección 10)
+✓ Próxima revisión con fecha real (o "Por definir" si no hay fecha) y enlace de Google Calendar
+✓ JavaScript en un único bloque al final, llamadas al final del script
+✓ HTML de shopTabs y shopView en el body ANTES del script
+✓ No hay errores de consola (probar en navegador antes de entregar)
+✓ Responsive: se ve bien en móvil y escritorio
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 9. PASOS PARA GENERAR UN CLIENTE NUEVO
+ 
+1.  Copiar estructura HTML base (Sección 1)
+2.  Copiar CSS completo (Sección 2)
+3.  Personalizar <title> y <h1>
+4.  Personalizar .subtitle
+5.  Rellenar bloque descripción — 5 píldoras (Sección 3)
+6.  Rellenar bloque objetivo — texto desarrollado (Sección 3)
+7.  Rellenar bloque perfil de la persona (Sección 4) con datos reales
+8.  Añadir botones PDF si hay documentos adjuntos (Sección 4.4) — opcional
+9.  Rellenar tabla resumen semanal dentro de #printArea (Sección 5)
+10. Crear array days con la planificación semanal (Sección 6.1)
+11. Crear array shopCategories con la lista de la compra (Sección 6.2)
+12. Crear array recetas si el cliente lo necesita (Sección 6.3)
+13. Añadir bloque suplementación si aplica (Sección 7)
+14. Añadir sección personalizada si el cliente la necesita (Sección 10)
+15. Actualizar fecha de próxima revisión y URL de Google Calendar
+16. Copiar JavaScript completo (Sección 6.4) — un único bloque al final
+17. Verificar checklist completo (Sección 8)
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+## 10. SECCIÓN PERSONALIZADA POR CLIENTE
+ 
+Esta sección es OPCIONAL y COMPLETAMENTE FLEXIBLE. Se incluye cuando el cliente
+tiene un contexto específico que requiere información adicional estructurada
+más allá del plan nutricional estándar.
+ 
+El sistema de tarjetas con iconos de estado sirve para CUALQUIER tipo de contenido
+secuencial, temporal o con seguimiento de estado. No está limitado a pruebas físicas.
+ 
+Ejemplos de uso posible:
+- Opositor (bombero, policía, militar): calendario de pruebas y fases nutricionales
+- Deportista con temporada: partidos, competiciones, objetivos por fase
+- Hidratación deportiva: pautas antes / durante / después del partido o entreno
+- Pautas nutricionales especiales: fases de carga, días de descanso, viajes
+- Protocolo de recuperación: semanas post-lesión, reintroducción progresiva
+- Analítica sanguínea: seguimiento de marcadores en el tiempo
+- Cualquier secuencia de eventos con estado (completado / próximo / pendiente / no logrado)
+ 
+La sección siempre se inserta ANTES de "Próxima revisión" y DESPUÉS de Recetas.
+Usar el mismo patrón de sección: margin-top:2.5rem + section-label descriptivo y personalizado.
+ 
+### Sistema de iconos de estado (universal)
+ 
+Los iconos se usan en cualquier tarjeta que requiera indicar el estado de un ítem:
+ 
+- ✅ → Completado / ejecutado / superado / logrado
+       Fondo: #f0faf5   Borde: #b8e6d0
+- 🔵 → Próximo / inminente / en curso / activo
+       Fondo: #EBF3FB   Borde: #A8C8E8
+- ⬜ → Pendiente / futuro / no iniciado
+       Fondo: #f7f7f7   Borde: #e0e0e0
+- ❌ → No logrado / cancelado / descartado (usar con criterio)
+       Fondo: #fdf0f0   Borde: #f4b8b8
+ 
+El significado exacto de cada icono se adapta al contexto:
+- Pruebas de oposición: ✅ superada · 🔵 próxima · ⬜ pendiente · ❌ no superada
+- Partidos / competición: ✅ jugado · 🔵 próximo · ⬜ pendiente · ❌ suspendido
+- Pautas / protocolos: ✅ ejecutado · 🔵 en curso · ⬜ pendiente · ❌ descartado
+- Marcadores analítica: ✅ normalizado · 🔵 mejorando · ⬜ pendiente revisión · ❌ fuera de rango
+ 
+### Estructura HTML genérica
+ 
+```html
+<div style="margin-top:2.5rem;">
+  <div class="section-label">[NOMBRE DESCRIPTIVO DE LA SECCIÓN — ej: Hidratación deportiva · Pautas por momento · Calendario de competición · Fase nutricional]</div>
+ 
+  <div style="display:grid;gap:10px;">
+ 
+    <!-- Bloque de contexto / estrategia (opcional, según cliente) -->
+    <div style="border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;">
+      <div style="font-size:13px;font-weight:600;color:#185FA5;margin-bottom:0.5rem;">
+        📈 [TÍTULO DEL BLOQUE — ej: Estrategia de fase / Protocolo activo / Contexto]
+      </div>
+      <div style="font-size:13px;color:#444;line-height:1.7;">
+        [DESCRIPCIÓN O CONTENIDO RELEVANTE PARA ESTE CLIENTE]
+      </div>
+    </div>
+ 
+    <!-- Bloque de items con iconos de estado -->
+    <div style="border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;">
+      <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:0.75rem;">📅 [TÍTULO — ej: Calendario / Protocolo / Seguimiento]</div>
+      <div style="display:grid;gap:6px;">
+ 
+        <!-- Item completado / ejecutado / superado -->
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#f0faf5;border:1px solid #b8e6d0;border-radius:8px;">
+          <div style="font-size:18px;">✅</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#111;">[NOMBRE DEL ITEM]</div>
+            <div style="font-size:12px;color:#888;">[FECHA / DETALLE / RESULTADO]</div>
+          </div>
+        </div>
+ 
+        <!-- Item próximo / inminente / en curso -->
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#EBF3FB;border:1px solid #A8C8E8;border-radius:8px;">
+          <div style="font-size:18px;">🔵</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#111;">[NOMBRE DEL ITEM]</div>
+            <div style="font-size:12px;color:#888;">[FECHA / DETALLE]</div>
+          </div>
+        </div>
+ 
+        <!-- Item pendiente / futuro -->
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#f7f7f7;border:1px solid #e0e0e0;border-radius:8px;">
+          <div style="font-size:18px;">⬜</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#555;">[NOMBRE DEL ITEM]</div>
+            <div style="font-size:12px;color:#aaa;">[FECHA / DETALLE]</div>
+          </div>
+        </div>
+ 
+        <!-- Item no logrado / cancelado (usar con criterio) -->
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:#fdf0f0;border:1px solid #f4b8b8;border-radius:8px;">
+          <div style="font-size:18px;">❌</div>
+          <div>
+            <div style="font-size:13px;font-weight:500;color:#555;">[NOMBRE DEL ITEM]</div>
+            <div style="font-size:12px;color:#aaa;">[FECHA / DETALLE]</div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+ 
+    <!-- Bloque de notas / pautas adicionales (opcional) -->
+    <div style="border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.25rem;">
+      <div style="font-size:13px;font-weight:600;color:#111;margin-bottom:0.5rem;">📋 [TÍTULO — ej: Pautas / Notas / Recomendaciones]</div>
+      <ul style="font-size:13px;color:#444;line-height:1.8;padding-left:1.2rem;">
+        <li>[PAUTA O NOTA 1]</li>
+        <li>[PAUTA O NOTA 2]</li>
+      </ul>
+    </div>
+ 
+  </div>
+</div>
+```
+ 
+### Ejemplos de uso real
+ 
+**Hidratación deportiva (futbolista):**
+```
+section-label: "Hidratación · Protocolo por momento"
+Items: ✅ Pre-partido (2h antes) · 🔵 Durante el partido · ⬜ Post-partido (recuperación)
+```
+ 
+**Calendario de competición (triatleta):**
+```
+section-label: "Temporada 2026 · Competiciones"
+Items: ✅ Sprint Castellón (marzo) · ✅ Olímpico Valencia (mayo) · 🔵 Ironman 70.3 Mallorca (oct) · ⬜ Ironman Barcelona (nov)
+```
+ 
+**Fases nutricionales (opositor a bombero):**
+```
+section-label: "Pruebas físicas · Oposición bombero"
+Items: ✅ Fase base (ene–mar) · ✅ Prueba circuito (abril) · 🔵 Entrevista + psicotécnico (jun) · ⬜ Reconocimiento médico (jul)
+```
+ 
+**Analítica sanguínea (perfil metabólico):**
+```
+section-label: "Analítica sanguínea · Seguimiento"
+Items: ✅ Basal (sept 2025) · ✅ Control 3 meses (dic 2025) · 🔵 Control 6 meses (mar 2026) · ⬜ Revisión anual (sept 2026)
+```
+ 
+NOTA: El contenido de esta sección varía completamente según el cliente.
+Lo importante es mantener: margin-top:2.5rem, section-label descriptivo y personalizado,
+y la estética visual (border-radius:12px, colores semánticos por estado) coherente
+con el resto del documento. Usar solo los bloques necesarios — no es obligatorio
+incluir los cuatro tipos de icono si no aplican todos.
+ 
+═══════════════════════════════════════════════════════════════════════════════════
+ 
+**RESPONSABILIDAD:** Mantener esta estructura para que todos los clientes de
+NUTRILOGOS tengan una experiencia visual consistente y profesional.
+ 
+Documento versión 5.0 — Proyecto NUTRILOGOS — Septiembre 2026

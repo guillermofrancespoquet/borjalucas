@@ -1,0 +1,383 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║               INSTRUCCIONES ESTILO APP NUTRILOGOS (HTML) v1.0                 ║
+║     Capa visual "app" sobre la plantilla HTML NutriLogos v5.0 (solo estilo)    ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+PROPÓSITO
+─────────
+Que los planes HTML de los clientes tengan el MISMO aspecto que la app de clientes
+(cliente.html · "Área de clientes · NutriLogos"), que los muestra dentro de un
+<iframe>. Es una capa de ESTILO: no cambia funciones, textos ni estructura del JS.
+
+REGLA DE ORO
+────────────
+- La estructura HTML, el JavaScript y las reglas de la plantilla v5.0
+  (INSTRUCCIONES_PLANTILLA_NUTRILOGOS_v5.0) siguen vigentes. Este documento SOLO
+  sustituye el CSS y los colores en línea.
+- El plan va en un iframe: NO hereda estilos de la app. Cada plan lleva su propio
+  CSS con los tokens de abajo (no enlazar al CSS de la app).
+- El HTML original v5.0 se conserva; la versión con estilo app se entrega como
+  copia aparte con sufijo `_app` (ej.: ramon_rumu_martinez_app.html).
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 1. TOKENS DE DISEÑO (copiados de cliente.html)
+
+Paleta
+  Teal (verdes):  --t900 #04342C · --t800 #085041 · --t600 #0F6E56 · --t400 #1D9E75
+                  --t100 #9FE1CB · --t50 #E1F5EE
+  Dorado:         --gold #B8956A · --gold-dk #7A5A38 · --gold-50 #F5EDE0
+  Grises cálidos: --g900 #1a1a18 · --g700 #444441 · --g500 #5F5E5A · --g400 #6A6963
+                  --g200 #D3D1C7 · --g100 #F1EFE8
+  Fondos/bordes:  --bg #FAFAF8 · --sf #fff · --bd rgba(0,0,0,.09) · --bdm rgba(0,0,0,.15)
+  Pills:          --pill-n #E3DFD2 (neutro) · --pill-g #C4E8D6 (verde) · --pill-au #EAD9BD (dorado)
+  Botón:          --btn #17805F · --btn-h #126B50
+
+Tipografía: Inter (400/500/600/700), 15px / 1.55, antialiasing activado.
+Carga:  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+(si no hay red, cae a la tipografía del sistema sin romper nada)
+
+Formas
+  Tarjetas / bloques grandes: borde .5px solid var(--bdm) · radio 16px · sombra 0 2px 10px rgba(4,52,44,.05)
+  Tarjetas de lista de compra: radio 14px
+  Banners (deporte, libre, suplementos): radio 12px
+  Pills (ingredientes, tags, botones de lista de compra): radio 20px
+  Pills de DÍAS (menú desarrollado): CUADRADAS con esquina redondeada → radio 8px
+  Badges de la tabla semanal y su leyenda: radio 8px (estilo original v5.0)
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 2. REGLAS VISUALES
+
+1. Títulos de sección (.section-label y el título de "Menú semanal de un vistazo"):
+   TODOS iguales → 13px · negrita (700) · verde var(--t800) · mayúsculas · letter-spacing .08em.
+2. h1: 22px · 700 · var(--t900) · letter-spacing -.01em.
+3. Botones principales (imprimir, etc.): fondo var(--t900), hover var(--t800), radio 12px.
+4. Día activo / pill activa: fondo var(--t900) con texto blanco.
+5. Sustituir TODO color pastel azul / lila / rosa / morado de v5.0 por teal, dorado o
+   neutros (ver mapa de la Sección 3).
+6. Foco de teclado: outline 2px var(--t400). Respetar prefers-reduced-motion.
+7. Puntos de "Impresiones del profesional": se MANTIENEN los colores semáforo originales
+   (verde #1D9E75 · azul #185FA5 · ámbar #BA7517 · coral #993C1D), con el significado
+   semántico de la Sección 4.1 de la plantilla v5.0.
+8. Tabla "Menú semanal de un vistazo" y su leyenda: se mantienen con el estilo ORIGINAL
+   de v5.0 (celdas de colores por fila, cabecera azul claro, badges originales). Para
+   ello el CSS lleva el bloque `#printArea .badge-*` que restaura los colores originales.
+   Solo el título de la sección cambia (regla 1) y el botón de imprimir (regla 3).
+9. Bloque Objetivo: fondo var(--t50), borde .5px var(--t100), etiqueta var(--t800),
+   texto var(--t900). Redactar "base plant-based" (sin "100%").
+10. Texto / jerarquía: --g900 títulos de comida, --g700 cuerpo, --g500/--g400 secundario.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 3. MAPA DE COLORES v5.0 → APP
+
+Neutros
+  #fff → var(--sf) · #fafafa → var(--bg) · #f7f7f7/#f4f4f4/#f3f3f3 → var(--g100)
+  #e5e5e5 → var(--bdm) · #ebebeb/#eee/#f0f0f0/#e8e8e8/#e0e0e0 → var(--bd)
+  #ddd/#ccc → var(--g200) · #111/#1a1a1a → var(--g900) · #333/#444 → var(--g700)
+  #555/#666 → var(--g500) · #777/#888/#999/#aaa/#bbb → var(--g400)
+
+Badges de comida (listado de días)
+  D  Desayuno  → fondo var(--gold-50) · texto var(--gold-dk)
+  A  Almuerzo  → fondo var(--t50)     · texto var(--t800)
+  C  Comida    → fondo var(--pill-g)  · texto var(--t900)
+  Me Merienda  → fondo var(--pill-n)  · texto var(--g700)
+  Ce Cena      → fondo var(--t800)    · texto #fff
+  Libre        → fondo var(--pill-au) · texto var(--gold-dk)
+  (en la tabla semanal y su leyenda siguen los colores originales v5.0)
+
+Tags y banners
+  extra → t50 / t800 / borde t100 · batch → gold-50 / gold-dk / borde pill-au
+  receta → pill-n / g700 / borde g200
+  sport fuerza → t50 / t100 / t800 · run → t50 / t100 / t800
+  sport crossfit → gold-50 / pill-au / gold-dk · rest → g100 / g200 / g700
+  libre-banner → pill-au / gold-dk · supp-banner → t50 / t100 / t900
+  batch-section → gold-50 / pill-au · bloque suplementación → t50 / t100 (punto var(--t400))
+Lista de compra (categorías)
+  prot → t50 / t800 · carb → gold-50 / gold-dk · fat → pill-g / t900 · extra → g100 / g700
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 4. CSS COMPLETO (copiar tal cual en el <head>, sustituye al CSS de la Sección 2 de v5.0)
+
+```css
+<style>
+  :root{--t900:#04342C;--t800:#085041;--t600:#0F6E56;--t400:#1D9E75;--t100:#9FE1CB;--t50:#E1F5EE;
+    --gold:#B8956A;--gold-dk:#7A5A38;--gold-50:#F5EDE0;--g900:#1a1a18;--g700:#444441;--g500:#5F5E5A;--g400:#6A6963;
+    --g200:#D3D1C7;--g100:#F1EFE8;--bg:#FAFAF8;--sf:#fff;--bd:rgba(0,0,0,.09);--bdm:rgba(0,0,0,.15);
+    --pill-n:#E3DFD2;--pill-g:#C4E8D6;--pill-au:#EAD9BD;--btn:#17805F;--btn-h:#126B50;
+    --f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--f); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--g900); padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+
+  /* ── PLAN SEMANAL ── */
+  .pn-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
+  .pn-day-btn:hover { background: var(--g100); }
+  .pn-day-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
+  .pn-meals { display: grid; gap: 10px; }
+  .pn-card { background: var(--sf); border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-meal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pn-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
+  .badge-a   { background: var(--t50); color: var(--t800); }
+  .badge-me  { background: var(--pill-n); color: var(--g700); }
+  .badge-c   { background: var(--pill-g); color: var(--t900); }
+  .badge-ce  { background: var(--t800); color: #fff; }
+  .badge-libre { background: var(--gold-50); color: var(--gold-dk); }
+  .pn-time { font-size: 12px; color: var(--g400); }
+  .pn-name { font-size: 15px; font-weight: 500; color: var(--g900); margin-bottom: 4px; }
+  .pn-note { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; line-height: 1.5; }
+  .pn-extra-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t50); color: var(--t800); border: 1px solid var(--t100); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-batch-tag  { display: inline-block; font-size: 11px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--pill-au); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-receta-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t800); color: #fff; border: 1px solid var(--g200); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-sport-banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-sport-banner.fuerza   { background: var(--t50); border: 1px solid var(--t100); color: var(--t800); }
+  .pn-sport-banner.run      { background: var(--gold-50); border: 1px solid var(--t100); color: var(--t800); }
+  .pn-sport-banner.crossfit { background: var(--gold-50); border: 1px solid var(--pill-au); color: var(--gold-dk); }
+  .pn-sport-banner.rest     { background: var(--g100); border: 1px solid var(--g200); color: var(--g700); }
+  .pn-libre-banner { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--gold-dk); margin-bottom: 10px; }
+  .pn-supp-banner { background: var(--t50); border: 1px solid var(--t100); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--t900); margin-bottom: 10px; line-height: 1.7; }
+  .pn-batch-section { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .pn-batch-section h3 { font-size: 13px; font-weight: 600; color: var(--gold-dk); margin-bottom: 8px; }
+  .pn-batch-section ul { padding-left: 1.1rem; font-size: 13px; color: var(--g500); line-height: 1.85; }
+  .pn-batch-section .bc-note { font-size: 12px; color: var(--g400); margin-top: 10px; border-left: 2px solid var(--pill-au); padding-left: 8px; }
+  .pn-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--bdm); }
+  .pn-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--g400); }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: var(--g400); margin-bottom: 1.5rem; }
+
+  /* ── PERFIL DE LA PERSONA ── */
+  .pn-perfil { margin-bottom: 2rem; }
+  .pn-perfil-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.25rem; }
+  .pn-perfil-score { font-size: 12px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--t100); border-radius: 8px; padding: 2px 10px; }
+  .pn-perfil-sub { font-size: 13px; color: var(--g400); margin-bottom: 1rem; }
+  .pn-perfil-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+  .pn-perfil-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 600px) {
+    .pn-perfil-grid { grid-template-columns: repeat(2, 1fr); }
+    .pn-perfil-grid-2 { grid-template-columns: 1fr; }
+  }
+  .pn-metric { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-metric-lbl { font-size: 11px; color: var(--g400); margin-bottom: 3px; }
+  .pn-metric-val { font-size: 18px; font-weight: 500; color: var(--g900); }
+  .pn-metric-sub { font-size: 11px; color: var(--g400); margin-top: 2px; }
+  .pn-impresiones { border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-impresiones-title { font-size: 12px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .pn-imp-item { font-size: 13px; color: var(--g700); line-height: 1.65; padding: 0.4rem 0; border-bottom: 1px solid var(--bd); display: flex; gap: 8px; align-items: flex-start; }
+  .pn-imp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-imp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .pn-imp-dot-green { background: #1D9E75; }
+  .pn-imp-dot-blue  { background: #185FA5; }
+  .pn-imp-dot-amber { background: #BA7517; }
+  .pn-imp-dot-coral { background: #993C1D; }
+  .pn-perfil-divider { border: none; border-top: 1px solid var(--bdm); margin: 2.5rem 0; }
+  .pn-perfil-section-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  @media (max-width: 600px) { .pn-perfil-section-row { grid-template-columns: 1fr; } }
+  .pn-antro-card { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-antro-card-title { font-size: 11px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+  .pn-antro-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid var(--bd); color: var(--g500); }
+  .pn-antro-row:last-child { border-bottom: none; }
+  .pn-antro-val { font-weight: 500; color: var(--g900); }
+  .pn-bio-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--bd); }
+  .pn-bio-row:last-child { border-bottom: none; }
+  .pn-bio-label { color: var(--g400); }
+  .pn-bio-val { font-weight: 500; color: var(--g900); }
+  .pn-bio-badge { font-size: 10px; padding: 1px 7px; border-radius: 6px; font-weight: 500; }
+  .bio-normal { background: var(--gold-50); color: var(--gold-dk); }
+  .bio-alto   { background: var(--t50); color: var(--t800); }
+  .bio-bajo   { background: var(--gold-50); color: var(--gold-dk); }
+  .pn-soma-card { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; align-items: center; }
+  .pn-soma-num { text-align: center; }
+  .pn-soma-num-val { font-size: 22px; font-weight: 500; color: var(--g900); }
+  .pn-soma-num-lbl { font-size: 10px; color: var(--g400); margin-top: 2px; }
+  .pn-soma-separator { color: var(--g200); font-size: 20px; }
+  .section-label { font-size: 12px; font-weight: 500; color: var(--g500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--bd); }
+
+  /* ── LISTA DE COMPRA ── */
+  .pn-shop-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
+  .pn-shop-btn:hover { background: var(--g100); }
+  .pn-shop-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
+  .pn-shop-btn.active.cat-prot  { background: var(--t50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
+  .pn-shop-btn.active.cat-fat   { background: var(--gold-50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200); color: var(--g700); }
+  .pn-shop-list { display: grid; gap: 8px; }
+  .pn-shop-item { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+  .pn-shop-item.cat-prot  { background: var(--t50); }
+  .pn-shop-item.cat-carb  { background: var(--gold-50); }
+  .pn-shop-item.cat-fat   { background: #EEF8F3; }
+  .pn-shop-item.cat-extra { background: var(--g100); }
+  .pn-shop-item:hover { filter: brightness(0.97); }
+  .pn-shop-item.done { opacity: 0.38; }
+  .pn-shop-item.done .pn-shop-item-name { text-decoration: line-through; color: var(--g400); }
+  .pn-shop-item-name { font-size: 13px; font-weight: 500; color: var(--g900); }
+  .pn-shop-item-qty { font-size: 12px; font-weight: 500; color: var(--g500); white-space: nowrap; text-align: right; }
+
+  /* ── INGREDIENTES ENCAPSULADOS EN COMIDAS ── */
+  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pn-ing { display: inline-block; font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 9px; color: var(--g700); line-height: 1.4; }
+
+  /* ── SUPLEMENTACIÓN ── */
+  .pn-supl-block { background: var(--t50); border: 1px solid var(--t100); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-supl-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid var(--t100); font-size: 13px; color: var(--g700); line-height: 1.5; }
+  .pn-supl-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-supl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t400); flex-shrink: 0; margin-top: 6px; }
+
+  /* ── RECETAS ── */
+  .pn-receta { border: 1px solid var(--bdm); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+  .pn-receta-header { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; cursor: pointer; background: var(--bg); transition: background 0.15s; user-select: none; }
+  .pn-receta-header:hover { background: var(--g100); }
+  .pn-receta-title { font-size: 14px; font-weight: 500; color: var(--g900); display: flex; align-items: center; gap: 8px; }
+  .pn-receta-arrow { font-size: 12px; color: var(--g400); transition: transform 0.2s; }
+  .pn-receta.open .pn-receta-arrow { transform: rotate(90deg); }
+  .pn-receta-body { display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--bdm); background: var(--sf); }
+  .pn-receta.open .pn-receta-body { display: block; }
+  .pn-receta-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-receta-meta-pill { font-size: 11px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g500); }
+  .pn-receta-section { font-size: 11px; font-weight: 600; color: var(--g500); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; margin-top: 0.85rem; }
+  .pn-receta-ings { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem; }
+  .pn-receta-ing { font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g700); }
+  .pn-receta-steps { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .pn-receta-step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--g700); line-height: 1.55; }
+  .pn-receta-step-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--bd); border: 1px solid var(--bd); font-size: 11px; font-weight: 600; color: var(--g500); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .pn-receta-tip { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; margin-top: 0.75rem; line-height: 1.5; }
+
+  /* ── BOTÓN IMPRIMIR ── */
+  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--t900); color: var(--sf); border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .pn-print-btn:hover { background: var(--t800); }
+
+  
+  /* ── ESTILO APP NUTRILOGOS ── */
+  .pn-card, .pn-impresiones, .pn-receta { border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); }
+  .pn-card { padding: 1rem 1.25rem; }
+  .pn-day-btn { border-radius: 8px; }
+  .pn-day-btn, .pn-shop-btn { border: .5px solid var(--bdm); border-radius: 20px; background: var(--sf); color: var(--g500); font-family: var(--f); font-weight: 500; }
+  .pn-day-btn { border-radius: 8px; }
+  .pn-day-btn:hover, .pn-shop-btn:hover { background: var(--t50); }
+  .pn-day-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
+  .pn-shop-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
+  .pn-shop-btn.active.cat-prot  { background: var(--t50);  border-color: var(--t100);   color: var(--t800); }
+  .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
+  .pn-shop-btn.active.cat-fat   { background: var(--pill-g); border-color: var(--t100);  color: var(--t900); }
+  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200);    color: var(--g700); }
+  .pn-badge { border-radius: 20px; font-weight: 600; }
+  .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
+  .badge-a   { background: var(--t50);     color: var(--t800); }
+  .badge-c   { background: var(--pill-g);  color: var(--t900); }
+  .badge-me  { background: var(--pill-n);  color: var(--g700); }
+  .badge-ce  { background: var(--t800);    color: #fff; }
+  .badge-libre { background: var(--pill-au); color: var(--gold-dk); }
+  .pn-extra-tag, .pn-batch-tag, .pn-receta-tag { border-radius: 20px; }
+  .pn-receta-tag { background: var(--pill-n); color: var(--g700); border: .5px solid var(--g200); }
+  .pn-sport-banner, .pn-libre-banner, .pn-supp-banner { border-radius: 12px; }
+  .pn-supl-block, .pn-batch-section { border-radius: 16px; }
+  .pn-note, .pn-receta-tip, .pn-batch-section .bc-note { border-left-color: var(--gold); }
+  .pn-ing, .pn-receta-ing, .pn-receta-meta-pill { border-radius: 20px; background: var(--g100); border: .5px solid var(--bd); }
+  .pn-receta-step-num { background: var(--t50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-item { border: .5px solid var(--bdm); border-radius: 14px; }
+  .pn-shop-item.done .pn-shop-item-name { color: var(--g400); }
+  .pn-receta-header { background: var(--sf); }
+  .pn-receta-header:hover { background: var(--t50); }
+  h1 { font-size: 22px; font-weight: 700; color: var(--t900); letter-spacing: -.01em; }
+  .section-label { font-size: 13px; font-weight: 700; color: var(--t800); text-transform: uppercase; letter-spacing: .08em; }
+  .pn-receta-section, .pn-impresiones-title { color: var(--gold-dk); font-weight: 700; }
+  .pn-print-btn { background: var(--t900); border-radius: 12px; font-family: var(--f); }
+  .pn-print-btn:hover { background: var(--t800); }
+  button:focus-visible, .pn-shop-item:focus-visible { outline: 2px solid var(--t400); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* tabla semanal y su leyenda: estilo original */
+  #printArea .pn-badge { border-radius: 8px; font-weight: 500; }
+  #printArea .badge-d{background:#EAF3DE;color:#3B6D11}#printArea .badge-a{background:#E1F5EE;color:#0F6E56}
+  #printArea .badge-me{background:#EEEDFE;color:#3C3489}#printArea .badge-c{background:#FAECE7;color:#993C1D}
+  #printArea .badge-ce{background:#F3E8FF;color:#6B21A8}#printArea .badge-libre{background:#FBEAF0;color:#993556}
+
+  /* ── IMPRESIÓN ── */
+  @media print {
+    @page { size: A4 landscape; margin: 1cm 1.2cm; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body > * { display: none !important; }
+    #printArea { display: block !important; }
+    #printArea {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex !important; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0.5cm; box-sizing: border-box;
+    }
+    #printArea .section-label { font-size: 14px !important; margin-bottom: 0.5rem !important; color: var(--g700) !important; }
+    #printArea table { width: 100% !important; min-width: unset !important; font-size: 11px !important; border-collapse: collapse !important; }
+    #printArea th { padding: 8px 6px !important; font-size: 10px !important; }
+    #printArea td { padding: 10px 8px !important; font-size: 11px !important; line-height: 1.4 !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .pn-print-btn { display: none !important; }
+    #printArea { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+```
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 5. HTML QUE CAMBIA RESPECTO A v5.0
+
+Bloque Objetivo (sustituye al azul de v5.0):
+```html
+<!-- BLOQUE OBJETIVO -->
+<div style="background:var(--t50);border:.5px solid var(--t100);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:11px;font-weight:600;color:var(--t800);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Objetivo</div>
+  <p style="font-size:14px;font-weight:600;color:var(--t900);line-height:1.65;">[DESCRIPCIÓN DESARROLLADA DEL OBJETIVO DEL CLIENTE — "base plant-based", sin "100%"]</p>
+</div>
+```
+
+Cabecera de la tabla semanal (título igual al resto de secciones, botón en teal):
+```html
+<div style="margin-top:2.5rem;margin-bottom:2rem" id="printArea">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;padding-bottom:0.4rem;border-bottom:1px solid #e8e8e8;">
+    <div style="font-size:13px;font-weight:700;color:var(--t800);text-transform:uppercase;letter-spacing:.08em;">Menú semanal de un vistazo</div>
+    <button class="pn-print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+  
+```
+El resto de la tabla (thead, celdas de color por fila, leyenda) es IDÉNTICO a v5.0.
+
+JavaScript: sin cambios, salvo una línea en render():
+  `color:#111` → `color:var(--g900)` en el título del día.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 6. ESTRUCTURA DE BLOQUES EN ESTA VARIANTE (plan Rumu)
+
+Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú semanal de un
+vistazo (#printArea) → Menú desarrollado por días → Lista de compra → Suplementación →
+Recetas.
+Fuera del HTML (porque la app ya los muestra): descripción del cliente (va en un .md
+interno), perfil de la persona con métricas, y próxima revisión.
+Cada sección: <div style="margin-top:2.5rem;"> + .section-label. Sin <hr>, sin
+border-top. Impresiones del profesional va como sección propia con su section-label.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+## 7. CHECKLIST ANTES DE ENTREGAR
+
+✓ Copia con sufijo `_app`; el HTML v5.0 original intacto
+✓ <head> con Inter y los tokens :root completos
+✓ Todos los títulos de sección iguales (13px · 700 · var(--t800))
+✓ Título de "Menú semanal de un vistazo" con el mismo estilo
+✓ Tabla semanal y leyenda con estilo original (bloque `#printArea .badge-*` presente)
+✓ Pills de días con radio 8px; pills de lista de compra con radio 20px
+✓ Puntos de impresiones con colores semáforo originales
+✓ Objetivo en verde y sin "100%" (decir "base plant-based")
+✓ Sin colores azul/lila/rosa/morado fuera de la tabla semanal y los puntos semáforo
+✓ Botón de imprimir en var(--t900)
+✓ Reglas de impresión (@media print) intactas
+✓ JS validado (`node --check`) y sin cambios funcionales
+✓ Revisado en móvil (≈430 px) y escritorio
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+Documento versión 1.0 — Proyecto NUTRILOGOS — Octubre 2026
+Basado en ramon_rumu_martinez_app.html y el estilo de cliente.html (app de clientes).
