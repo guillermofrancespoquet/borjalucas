@@ -235,15 +235,17 @@
 <!-- BLOQUE OBJETIVO -->
 <div style="background:var(--t50);border:.5px solid var(--t100);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
   <div style="font-size:11px;font-weight:600;color:var(--t800);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Objetivo</div>
-  <p style="font-size:14px;font-weight:600;color:var(--t900);line-height:1.65;">Mejorar tu composición corporal (reducir masa grasa y preservar o ganar masa muscular) y construir hábitos alimentarios sostenibles que te acompañen durante la recuperación de la pubalgia y en tu día a día. Es un objetivo de partida: lo concretaremos con los datos de la primera consulta.</p>
+  <p style="font-size:14px;font-weight:600;color:var(--t900);line-height:1.65;">Recomponer tu composición corporal, con foco en perder grasa y conservar tu masa muscular, sin perder rendimiento deportivo, y construir hábitos alimentarios sostenibles que te acompañen durante la recuperación de la pubalgia y en tu día a día. Es un objetivo de partida: lo concretaremos con los datos de la primera consulta.</p>
 </div>
 
 <div style="margin-top:2.5rem;">
   <div class="section-label">Impresiones del profesional</div>
   <div class="pn-impresiones">
-    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>Objetivo de partida.</strong> Recomposición corporal y hábitos sostenibles, útiles tanto durante la recuperación como en tu vida cotidiana. Lo confirmaremos o ajustaremos en la primera consulta.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>Objetivo de partida.</strong> Has marcado perder grasa y mejorar tu rendimiento deportivo, sin una fecha concreta. Lo confirmaremos o ajustaremos en la primera consulta.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-green"></div><div><strong>Buen punto de partida.</strong> Haces 5 comidas al día con horarios bastante regulares, nunca has seguido una dieta y declaras una actividad muy alta. Sobre esa base construiremos el plan.</div></div>
     <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Lesión en curso.</strong> Has empezado la temporada con pubalgia y haces trabajo aparte de recuperación. Esa carga de entrenamiento condiciona tu gasto energético y la tendremos en cuenta al fijar objetivos.</div></div>
-    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Tu percepción.</strong> Sientes que el peso y la composición corporal se te están yendo de las manos. Lo contrastaremos con datos objetivos para trabajar sobre una base real.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Cocina y almuerzo fuera.</strong> Cocinas poco y suele cocinar tu pareja u otras personas; además, el almuerzo lo compras en el supermercado los días de trabajo. Buscaremos platos sencillos de preparar y opciones prácticas para ese almuerzo.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Tu percepción e hidratación.</strong> Sientes que el peso y la composición corporal se te están yendo de las manos y valoras tu hidratación con un 6 sobre 10. Lo contrastaremos con datos objetivos y propondremos pautas simples.</div></div>
   </div>
 </div>
 
@@ -278,6 +280,7 @@
   <div class="pn-legend">
     <span style="font-size:12px;color:#aaa;margin-right:4px;">Comidas:</span>
     <span class="pn-legend-item"><span class="pn-badge badge-d">D</span> Desayuno</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-a">A</span> Almuerzo</span>
     <span class="pn-legend-item"><span class="pn-badge badge-c">C</span> Comida</span>
     <span class="pn-legend-item"><span class="pn-badge badge-me">Me</span> Merienda</span>
     <span class="pn-legend-item"><span class="pn-badge badge-ce">Ce</span> Cena</span>
@@ -306,10 +309,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -321,10 +325,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -336,10 +341,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -351,10 +357,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -366,10 +373,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -381,10 +389,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   },
   {
@@ -396,10 +405,11 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
-      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+      { type:"D", time:"7:00–7:15", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"A", time:"11:00", name:"Almuerzo", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"15:00–15:30", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"17:30", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"21:30", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
     ]
   }
 ];
@@ -490,12 +500,15 @@ function buildTabs() {
 }
  
 function buildSummary() {
-  const rows = [
+  const allRows = [
     { type:"D", bg:"#f9fcf5" },
+    { type:"A", bg:"#f0f9f6" },
     { type:"C", bg:"#f3fdf8" },
     { type:"Me", bg:"#f5f3ff" },
     { type:"Ce", bg:"#fdf8ff" }
   ];
+  // Solo se muestran las filas de las comidas que el cliente tiene en algún día
+  const rows = allRows.filter(r => days.some(d => d.meals.some(m => m.type === r.type)));
   const tbody = document.getElementById("summaryBody");
   let html = "";
   rows.forEach(row => {
