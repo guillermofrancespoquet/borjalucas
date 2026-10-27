@@ -36,10 +36,25 @@ Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú se
 - Objetivo: recomposición corporal y hábitos sostenibles, útiles en la recuperación y en el día a día. Según él, el peso y la composición corporal "se le están yendo de las manos".
 - Pendiente de la consulta: datos, gustos, aversiones, horarios, estructura de comidas (ahora D, C, Me, Ce de forma provisional), objetivo energético y de macros, y si hace falta suplementación o recetas.
 
+## Perfil máster (a rellenar tras la primera consulta)
+Documento de referencia del cliente. Rellenar con los datos reales; la guía de la plantilla (secciones 3 y 4) indica qué recoger.
+- **Descripción:** sexo · edad · talla · peso. Contexto: futbolista, CD Soneja (3RFEF), lesionado por pubalgia. Pendiente: profesión / situación vital.
+- **Hábitos:** tabaco · alcohol · sueño → *por definir*.
+- **Aversiones / exclusiones:** *por definir*.
+- **Valoración inicial** (fecha, profesional): peso, IMC, talla / envergadura, % masa grasa, % masa muscular, LBM, TMB, ratio cintura / cadera → *por definir*.
+- **Antropometría:** pliegues (Σ6, Σ8) y perímetros → *por definir*.
+- **Bioimpedancia:** agua, proteína, masa ósea, masa grasa, músculo esquelético, grasa visceral → *por definir*.
+- **Somatotipo:** *por definir*.
+- **Próxima revisión:** *por definir*.
+
 ## Privacidad (repo público)
-- Todo lo que está aquí es público. Los datos clínicos detallados (analíticas, hallazgos fuera de ámbito nutricional, notas internas) **no van en el repo**: viven en el .md del cliente fuera del repo. No subir ese .md ni PDFs de pruebas.
+- Todo lo que está aquí es público, **incluido este `CLAUDE.md`**.
+- Decisión de Guille: este archivo es el **perfil máster** del cliente. Ahí van la descripción del cliente y el perfil con métricas (composición corporal, antropometría, bioimpedancia, hábitos, aversiones), aunque el repo sea público.
+- Siguen **fuera del repo** las analíticas, los hallazgos fuera del ámbito nutricional y las notas internas sensibles; salvo que Guille diga lo contrario, no se escriben aquí. No subir PDFs de pruebas.
 - Antes de subir cualquier archivo nuevo, pensar si se publicará por Pages.
 - Guille ha decidido mantener en `index.html` la información del cliente que él mismo ha aportado (lesión, club, objetivo).
+
+> ⚠️ **RECORDATORIO (privacidad):** revisar con Guille, cuando lleguen los datos de la primera consulta, si el perfil máster seguirá en este repo público o se pasa a un lugar privado. Cuando se decida, borrar este aviso.
 
 ## Reglas de trabajo
 - No renombrar archivos del cliente de forma unilateral; si falla un enlace, pedir primero la URL en vivo de GitHub Pages.
