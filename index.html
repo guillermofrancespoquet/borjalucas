@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planificación Nutricional — Borja Lucas</title>
+<link rel="apple-touch-icon" href="Logo.png">
+<meta name="apple-mobile-web-app-title" content="NutriLogos">
+<meta name="application-name" content="NutriLogos">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root{--t900:#04342C;--t800:#085041;--t600:#0F6E56;--t400:#1D9E75;--t100:#9FE1CB;--t50:#E1F5EE;
+    --gold:#B8956A;--gold-dk:#7A5A38;--gold-50:#F5EDE0;--g900:#1a1a18;--g700:#444441;--g500:#5F5E5A;--g400:#6A6963;
+    --g200:#D3D1C7;--g100:#F1EFE8;--bg:#FAFAF8;--sf:#fff;--bd:rgba(0,0,0,.09);--bdm:rgba(0,0,0,.15);
+    --pill-n:#E3DFD2;--pill-g:#C4E8D6;--pill-au:#EAD9BD;--btn:#17805F;--btn-h:#126B50;
+    --f:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;}
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--f); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--g900); padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+
+  /* ── PLAN SEMANAL ── */
+  .pn-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
+  .pn-day-btn:hover { background: var(--g100); }
+  .pn-day-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
+  .pn-meals { display: grid; gap: 10px; }
+  .pn-card { background: var(--sf); border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-meal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .pn-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
+  .badge-a   { background: var(--t50); color: var(--t800); }
+  .badge-me  { background: var(--pill-n); color: var(--g700); }
+  .badge-c   { background: var(--pill-g); color: var(--t900); }
+  .badge-ce  { background: var(--t800); color: #fff; }
+  .badge-libre { background: var(--gold-50); color: var(--gold-dk); }
+  .pn-time { font-size: 12px; color: var(--g400); }
+  .pn-name { font-size: 15px; font-weight: 500; color: var(--g900); margin-bottom: 4px; }
+  .pn-note { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; line-height: 1.5; }
+  .pn-extra-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t50); color: var(--t800); border: 1px solid var(--t100); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-batch-tag  { display: inline-block; font-size: 11px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--pill-au); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-receta-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t800); color: #fff; border: 1px solid var(--g200); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-sport-banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-sport-banner.fuerza   { background: var(--t50); border: 1px solid var(--t100); color: var(--t800); }
+  .pn-sport-banner.run      { background: var(--gold-50); border: 1px solid var(--t100); color: var(--t800); }
+  .pn-sport-banner.crossfit { background: var(--gold-50); border: 1px solid var(--pill-au); color: var(--gold-dk); }
+  .pn-sport-banner.rest     { background: var(--g100); border: 1px solid var(--g200); color: var(--g700); }
+  .pn-libre-banner { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--gold-dk); margin-bottom: 10px; }
+  .pn-supp-banner { background: var(--t50); border: 1px solid var(--t100); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--t900); margin-bottom: 10px; line-height: 1.7; }
+  .pn-batch-section { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .pn-batch-section h3 { font-size: 13px; font-weight: 600; color: var(--gold-dk); margin-bottom: 8px; }
+  .pn-batch-section ul { padding-left: 1.1rem; font-size: 13px; color: var(--g500); line-height: 1.85; }
+  .pn-batch-section .bc-note { font-size: 12px; color: var(--g400); margin-top: 10px; border-left: 2px solid var(--pill-au); padding-left: 8px; }
+  .pn-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--bdm); }
+  .pn-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--g400); }
+  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: var(--g400); margin-bottom: 1.5rem; }
+
+  /* ── PERFIL DE LA PERSONA ── */
+  .pn-perfil { margin-bottom: 2rem; }
+  .pn-perfil-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.25rem; }
+  .pn-perfil-score { font-size: 12px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--t100); border-radius: 8px; padding: 2px 10px; }
+  .pn-perfil-sub { font-size: 13px; color: var(--g400); margin-bottom: 1rem; }
+  .pn-perfil-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+  .pn-perfil-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 600px) {
+    .pn-perfil-grid { grid-template-columns: repeat(2, 1fr); }
+    .pn-perfil-grid-2 { grid-template-columns: 1fr; }
+  }
+  .pn-metric { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-metric-lbl { font-size: 11px; color: var(--g400); margin-bottom: 3px; }
+  .pn-metric-val { font-size: 18px; font-weight: 500; color: var(--g900); }
+  .pn-metric-sub { font-size: 11px; color: var(--g400); margin-top: 2px; }
+  .pn-impresiones { border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-impresiones-title { font-size: 12px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .pn-imp-item { font-size: 13px; color: var(--g700); line-height: 1.65; padding: 0.4rem 0; border-bottom: 1px solid var(--bd); display: flex; gap: 8px; align-items: flex-start; }
+  .pn-imp-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-imp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+  .pn-imp-dot-green { background: #1D9E75; }
+  .pn-imp-dot-blue  { background: #185FA5; }
+  .pn-imp-dot-amber { background: #BA7517; }
+  .pn-imp-dot-coral { background: #993C1D; }
+  .pn-perfil-divider { border: none; border-top: 1px solid var(--bdm); margin: 2.5rem 0; }
+  .pn-perfil-section-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  @media (max-width: 600px) { .pn-perfil-section-row { grid-template-columns: 1fr; } }
+  .pn-antro-card { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
+  .pn-antro-card-title { font-size: 11px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
+  .pn-antro-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid var(--bd); color: var(--g500); }
+  .pn-antro-row:last-child { border-bottom: none; }
+  .pn-antro-val { font-weight: 500; color: var(--g900); }
+  .pn-bio-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--bd); }
+  .pn-bio-row:last-child { border-bottom: none; }
+  .pn-bio-label { color: var(--g400); }
+  .pn-bio-val { font-weight: 500; color: var(--g900); }
+  .pn-bio-badge { font-size: 10px; padding: 1px 7px; border-radius: 6px; font-weight: 500; }
+  .bio-normal { background: var(--gold-50); color: var(--gold-dk); }
+  .bio-alto   { background: var(--t50); color: var(--t800); }
+  .bio-bajo   { background: var(--gold-50); color: var(--gold-dk); }
+  .pn-soma-card { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; align-items: center; }
+  .pn-soma-num { text-align: center; }
+  .pn-soma-num-val { font-size: 22px; font-weight: 500; color: var(--g900); }
+  .pn-soma-num-lbl { font-size: 10px; color: var(--g400); margin-top: 2px; }
+  .pn-soma-separator { color: var(--g200); font-size: 20px; }
+  .section-label { font-size: 12px; font-weight: 500; color: var(--g500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--bd); }
+
+  /* ── LISTA DE COMPRA ── */
+  .pn-shop-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
+  .pn-shop-btn:hover { background: var(--g100); }
+  .pn-shop-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
+  .pn-shop-btn.active.cat-prot  { background: var(--t50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
+  .pn-shop-btn.active.cat-fat   { background: var(--gold-50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200); color: var(--g700); }
+  .pn-shop-list { display: grid; gap: 8px; }
+  .pn-shop-item { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+  .pn-shop-item.cat-prot  { background: var(--t50); }
+  .pn-shop-item.cat-carb  { background: var(--gold-50); }
+  .pn-shop-item.cat-fat   { background: #EEF8F3; }
+  .pn-shop-item.cat-extra { background: var(--g100); }
+  .pn-shop-item:hover { filter: brightness(0.97); }
+  .pn-shop-item.done { opacity: 0.38; }
+  .pn-shop-item.done .pn-shop-item-name { text-decoration: line-through; color: var(--g400); }
+  .pn-shop-item-name { font-size: 13px; font-weight: 500; color: var(--g900); }
+  .pn-shop-item-qty { font-size: 12px; font-weight: 500; color: var(--g500); white-space: nowrap; text-align: right; }
+
+  /* ── INGREDIENTES ENCAPSULADOS EN COMIDAS ── */
+  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pn-ing { display: inline-block; font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 9px; color: var(--g700); line-height: 1.4; }
+
+  /* ── SUPLEMENTACIÓN ── */
+  .pn-supl-block { background: var(--t50); border: 1px solid var(--t100); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-supl-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid var(--t100); font-size: 13px; color: var(--g700); line-height: 1.5; }
+  .pn-supl-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .pn-supl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t400); flex-shrink: 0; margin-top: 6px; }
+
+  /* ── RECETAS ── */
+  .pn-receta { border: 1px solid var(--bdm); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
+  .pn-receta-header { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; cursor: pointer; background: var(--bg); transition: background 0.15s; user-select: none; }
+  .pn-receta-header:hover { background: var(--g100); }
+  .pn-receta-title { font-size: 14px; font-weight: 500; color: var(--g900); display: flex; align-items: center; gap: 8px; }
+  .pn-receta-arrow { font-size: 12px; color: var(--g400); transition: transform 0.2s; }
+  .pn-receta.open .pn-receta-arrow { transform: rotate(90deg); }
+  .pn-receta-body { display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--bdm); background: var(--sf); }
+  .pn-receta.open .pn-receta-body { display: block; }
+  .pn-receta-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
+  .pn-receta-meta-pill { font-size: 11px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g500); }
+  .pn-receta-section { font-size: 11px; font-weight: 600; color: var(--g500); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; margin-top: 0.85rem; }
+  .pn-receta-ings { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem; }
+  .pn-receta-ing { font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g700); }
+  .pn-receta-steps { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  .pn-receta-step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--g700); line-height: 1.55; }
+  .pn-receta-step-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--bd); border: 1px solid var(--bd); font-size: 11px; font-weight: 600; color: var(--g500); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .pn-receta-tip { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; margin-top: 0.75rem; line-height: 1.5; }
+
+  /* ── BOTÓN IMPRIMIR ── */
+  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--t900); color: var(--sf); border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .pn-print-btn:hover { background: var(--t800); }
+
+  
+  /* ── ESTILO APP NUTRILOGOS ── */
+  .pn-card, .pn-impresiones, .pn-receta { border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); }
+  .pn-card { padding: 1rem 1.25rem; }
+  .pn-day-btn { border-radius: 8px; }
+  .pn-day-btn, .pn-shop-btn { border: .5px solid var(--bdm); border-radius: 20px; background: var(--sf); color: var(--g500); font-family: var(--f); font-weight: 500; }
+  .pn-day-btn { border-radius: 8px; }
+  .pn-day-btn:hover, .pn-shop-btn:hover { background: var(--t50); }
+  .pn-day-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
+  .pn-shop-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
+  .pn-shop-btn.active.cat-prot  { background: var(--t50);  border-color: var(--t100);   color: var(--t800); }
+  .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
+  .pn-shop-btn.active.cat-fat   { background: var(--pill-g); border-color: var(--t100);  color: var(--t900); }
+  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200);    color: var(--g700); }
+  .pn-badge { border-radius: 20px; font-weight: 600; }
+  .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
+  .badge-a   { background: var(--t50);     color: var(--t800); }
+  .badge-c   { background: var(--pill-g);  color: var(--t900); }
+  .badge-me  { background: var(--pill-n);  color: var(--g700); }
+  .badge-ce  { background: var(--t800);    color: #fff; }
+  .badge-libre { background: var(--pill-au); color: var(--gold-dk); }
+  .pn-extra-tag, .pn-batch-tag, .pn-receta-tag { border-radius: 20px; }
+  .pn-receta-tag { background: var(--pill-n); color: var(--g700); border: .5px solid var(--g200); }
+  .pn-sport-banner, .pn-libre-banner, .pn-supp-banner { border-radius: 12px; }
+  .pn-supl-block, .pn-batch-section { border-radius: 16px; }
+  .pn-note, .pn-receta-tip, .pn-batch-section .bc-note { border-left-color: var(--gold); }
+  .pn-ing, .pn-receta-ing, .pn-receta-meta-pill { border-radius: 20px; background: var(--g100); border: .5px solid var(--bd); }
+  .pn-receta-step-num { background: var(--t50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-item { border: .5px solid var(--bdm); border-radius: 14px; }
+  .pn-shop-item.done .pn-shop-item-name { color: var(--g400); }
+  .pn-receta-header { background: var(--sf); }
+  .pn-receta-header:hover { background: var(--t50); }
+  h1 { font-size: 22px; font-weight: 700; color: var(--t900); letter-spacing: -.01em; }
+  .section-label { font-size: 13px; font-weight: 700; color: var(--t800); text-transform: uppercase; letter-spacing: .08em; }
+  .pn-receta-section, .pn-impresiones-title { color: var(--gold-dk); font-weight: 700; }
+  .pn-print-btn { background: var(--t900); border-radius: 12px; font-family: var(--f); }
+  .pn-print-btn:hover { background: var(--t800); }
+  button:focus-visible, .pn-shop-item:focus-visible { outline: 2px solid var(--t400); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* tabla semanal y su leyenda: estilo original */
+  #printArea .pn-badge { border-radius: 8px; font-weight: 500; }
+  #printArea .badge-d{background:#EAF3DE;color:#3B6D11}#printArea .badge-a{background:#E1F5EE;color:#0F6E56}
+  #printArea .badge-me{background:#EEEDFE;color:#3C3489}#printArea .badge-c{background:#FAECE7;color:#993C1D}
+  #printArea .badge-ce{background:#F3E8FF;color:#6B21A8}#printArea .badge-libre{background:#FBEAF0;color:#993556}
+
+  /* ── IMPRESIÓN ── */
+  @media print {
+    @page { size: A4 landscape; margin: 1cm 1.2cm; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body > * { display: none !important; }
+    #printArea { display: block !important; }
+    #printArea {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      display: flex !important; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0.5cm; box-sizing: border-box;
+    }
+    #printArea .section-label { font-size: 14px !important; margin-bottom: 0.5rem !important; color: var(--g700) !important; }
+    #printArea table { width: 100% !important; min-width: unset !important; font-size: 11px !important; border-collapse: collapse !important; }
+    #printArea th { padding: 8px 6px !important; font-size: 10px !important; }
+    #printArea td { padding: 10px 8px !important; font-size: 11px !important; line-height: 1.4 !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+    .pn-print-btn { display: none !important; }
+    #printArea { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- BORRADOR previo a la primera consulta: menú, cantidades y lista de compra por definir. -->
+<h1>Planificación Nutricional — Borja Lucas</h1>
+<p class="subtitle">Recomposición corporal · Hábitos sostenibles · Recuperación de pubalgia · CD Soneja (3RFEF)</p>
+
+<!-- BLOQUE OBJETIVO -->
+<div style="background:var(--t50);border:.5px solid var(--t100);border-radius:16px;padding:1rem 1.25rem;margin-bottom:1.5rem;">
+  <div style="font-size:11px;font-weight:600;color:var(--t800);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">Objetivo</div>
+  <p style="font-size:14px;font-weight:600;color:var(--t900);line-height:1.65;">Mejorar tu composición corporal (reducir masa grasa y preservar o ganar masa muscular) y construir hábitos alimentarios sostenibles que te acompañen durante la recuperación de la pubalgia y en tu día a día. Es un objetivo de partida: lo concretaremos con los datos de la primera consulta.</p>
+</div>
+
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Impresiones del profesional</div>
+  <div class="pn-impresiones">
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-blue"></div><div><strong>Objetivo de partida.</strong> Recomposición corporal y hábitos sostenibles, útiles tanto durante la recuperación como en tu vida cotidiana. Lo confirmaremos o ajustaremos en la primera consulta.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Lesión en curso.</strong> Has empezado la temporada con pubalgia y haces trabajo aparte de recuperación. Esa carga de entrenamiento condiciona tu gasto energético y la tendremos en cuenta al fijar objetivos.</div></div>
+    <div class="pn-imp-item"><div class="pn-imp-dot pn-imp-dot-amber"></div><div><strong>Tu percepción.</strong> Sientes que el peso y la composición corporal se te están yendo de las manos. Lo contrastaremos con datos objetivos para trabajar sobre una base real.</div></div>
+  </div>
+</div>
+
+<div id="printArea" style="margin-top:2.5rem;margin-bottom:2rem">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;padding-bottom:0.4rem;border-bottom:1px solid #e8e8e8;">
+    <div class="section-label" style="margin:0;padding:0;border:none;">Menú semanal de un vistazo</div>
+    <button class="pn-print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+  </div>
+  <div style="overflow-x:auto;border-radius:12px;border:1px solid #e5e5e5;">
+    <table style="width:100%;border-collapse:collapse;min-width:700px;font-size:12px;">
+      <thead>
+        <tr>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;width:46px;"></th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Lunes</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Martes</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Miércoles</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Jueves</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Viernes</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Sábado</th>
+          <th style="background:#dce8f5;color:#1a2e44;padding:9px 10px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-right:1px solid #c5d8ed;">Domingo</th>
+        </tr>
+      </thead>
+      <tbody id="summaryBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Menú desarrollado por días</div>
+  <div class="pn-days" id="dayTabs"></div>
+  <div id="dayView"></div>
+  <div class="pn-legend">
+    <span style="font-size:12px;color:#aaa;margin-right:4px;">Comidas:</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-d">D</span> Desayuno</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-c">C</span> Comida</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-me">Me</span> Merienda</span>
+    <span class="pn-legend-item"><span class="pn-badge badge-ce">Ce</span> Cena</span>
+  </div>
+</div>
+
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Lista de compra semanal</div>
+  <div class="pn-shop-tabs" id="shopTabs"></div>
+  <div id="shopView"></div>
+</div>
+
+<div style="margin-top:2.5rem;">
+  <div class="section-label">Recetas</div>
+  <div id="recetasList"></div>
+</div>
+
+<script>
+const days = [
+  {
+    short: "Lun",
+    full: "Lunes",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Mar",
+    full: "Martes",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Mié",
+    full: "Miércoles",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Jue",
+    full: "Jueves",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Vie",
+    full: "Viernes",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Sáb",
+    full: "Sábado",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  },
+  {
+    short: "Dom",
+    full: "Domingo",
+    sport: "🩹 Recuperación",
+    sportClass: "rest",
+    sportBanner: "Trabajo de readaptación por pubalgia. Sesiones, carga y días de descanso por definir con tu equipo médico / readaptador.",
+    suppl: null,
+    libre: false,
+    meals: [
+      { type:"D", time:"Por definir", name:"Desayuno", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"C", time:"Por definir", name:"Comida", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Me", time:"Por definir", name:"Merienda", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false },
+      { type:"Ce", time:"Por definir", name:"Cena", tags:[], desc:"Por definir tras la consulta", short:"Por definir", note:"se ajustará a tus gustos, horarios y carga de trabajo de recuperación una vez cerrada la consulta.", libre:false }
+    ]
+  }
+];
+
+const shopCategories = [
+  { label: "🫘 Proteínas", cls: "cat-prot", items: [ { name: "Por definir tras la consulta", qty: "—" } ] },
+  { label: "🌾 Carbohidratos", cls: "cat-carb", items: [ { name: "Por definir tras la consulta", qty: "—" } ] },
+  { label: "🥑 Grasas", cls: "cat-fat", items: [ { name: "Por definir tras la consulta", qty: "—" } ] },
+  { label: "🧄 Extras", cls: "cat-extra", items: [ { name: "Por definir tras la consulta", qty: "—" } ] }
+];
+
+const recetas = [
+  {
+    emoji: "🍽",
+    nombre: "Receta por definir",
+    tiempo: "⏱ — min",
+    raciones: "🍽 1 persona",
+    utensilios: "🔥 —",
+    ingredientes: [ "Por definir tras la consulta" ],
+    pasos: [ "Las recetas se añadirán una vez definido el menú y tus gustos." ],
+    tip: "💡 Aquí irán recetas sencillas adaptadas a tu plan."
+  }
+];
+ 
+function badgeClass(type, libre) {
+  if (libre) return "badge-libre";
+  const map = { D:"badge-d", A:"badge-a", Me:"badge-me", C:"badge-c", Ce:"badge-ce" };
+  return map[type] || "badge-c";
+}
+function badgeLabel(type, libre) {
+  if (libre) return "Libre";
+  const map = { D:"Desayuno", A:"Almuerzo", Me:"Merienda", C:"Comida", Ce:"Cena" };
+  return map[type] || type;
+}
+ 
+let current = 0;
+ 
+function render() {
+  const d = days[current];
+  let html = `<div style="font-size:18px;font-weight:500;color:var(--g900);margin-bottom:8px">${d.full}</div>`;
+  html += `<div class="pn-sport-banner ${d.sportClass}">${d.sport} — ${d.sportBanner}</div>`;
+  if (d.libre) html += `<div class="pn-libre-banner">La cena de este día está reservada como comida libre. El resto del día mantiene la base vegetal habitual.</div>`;
+  if (d.suppl) html += `<div class="pn-supp-banner">` + d.suppl.replace(/\n/g,"<br>") + `</div>`;
+  if (d.batchCooking) {
+    const bc = d.batchCooking;
+    const items = bc.items.map(i => `<li>${i}</li>`).join("");
+    html += `<div class="pn-batch-section"><h3>${bc.title}</h3><ul>${items}</ul><div class="bc-note">⏱ ${bc.note}</div></div>`;
+  }
+  html += `<div class="pn-meals">`;
+  d.meals.forEach(m => {
+    const bc = badgeClass(m.type, m.libre);
+    const bl = badgeLabel(m.type, m.libre);
+    let tagsHtml = "";
+    if (m.tags && m.tags.includes("extra")) tagsHtml += `<span class="pn-extra-tag">🥡 Hacer cantidad extra</span> `;
+    if (m.tags && m.tags.includes("batch")) tagsHtml += `<span class="pn-batch-tag">♻️ Usar del batch cooking</span> `;
+    const rawParts = m.desc.split(/\n/).map(s => s.trim()).filter(s => s.length > 0);
+    let ingsHtml = rawParts.map(part => `<span class="pn-ing">${part}</span>`).join("");
+    html += `
+      <div class="pn-card">
+        <div class="pn-meal-header">
+          <span class="pn-badge ${bc}">${bl}</span>
+          <span class="pn-time">${m.time}</span>
+        </div>
+        ${tagsHtml ? `<div style="margin-bottom:6px">${tagsHtml}</div>` : ""}
+        <div class="pn-name">${m.name}</div>
+        <div class="pn-ing-list">${ingsHtml}</div>
+        <div class="pn-note">Adaptación: ${m.note}</div>
+      </div>`;
+  });
+  html += `</div>`;
+  document.getElementById("dayView").innerHTML = html;
+}
+ 
+function buildTabs() {
+  const container = document.getElementById("dayTabs");
+  days.forEach((d, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-day-btn" + (i === 0 ? " active" : "");
+    btn.textContent = d.short;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-day-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      current = i;
+      render();
+    };
+    container.appendChild(btn);
+  });
+}
+ 
+function buildSummary() {
+  const rows = [
+    { type:"D", bg:"#f9fcf5" },
+    { type:"C", bg:"#f3fdf8" },
+    { type:"Me", bg:"#f5f3ff" },
+    { type:"Ce", bg:"#fdf8ff" }
+  ];
+  const tbody = document.getElementById("summaryBody");
+  let html = "";
+  rows.forEach(row => {
+    html += `<tr>`;
+    html += `<td style="background:#f7f7f7;padding:8px 6px;border-right:2px solid #e0e0e0;border-bottom:1px solid #eee;text-align:center;vertical-align:middle;"><span class="pn-badge badge-${row.type.toLowerCase()}" style="display:inline-block;">${row.type}</span></td>`;
+    days.forEach(d => {
+      const meal = d.meals.find(m => m.type === row.type);
+      let cellHtml, cellBg = row.bg;
+      if (!meal) {
+        cellHtml = `<span style="color:#aaa;font-style:italic;">—</span>`;
+      } else if (meal.libre) {
+        cellHtml = `Libre`;
+        cellBg = "#fbeaf0";
+      } else {
+        cellHtml = meal.short || meal.name;
+      }
+      const styleLibre = meal && meal.libre ? "color:#72243E;font-style:italic;" : "color:#333;";
+      html += `<td style="background:${cellBg};padding:8px 10px;border-right:1px solid #eee;border-bottom:1px solid #eee;text-align:center;${styleLibre}line-height:1.4;">${cellHtml}</td>`;
+    });
+    html += `</tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+let shopCurrent = 0;
+ 
+function renderShop() {
+  const cat = shopCategories[shopCurrent];
+  let html = '<div class="pn-shop-list">';
+  cat.items.forEach(item => {
+    html += `<div class="pn-shop-item ${cat.cls}" onclick="this.classList.toggle('done')">
+      <div class="pn-shop-item-name">${item.name}</div>
+      <div class="pn-shop-item-qty">${item.qty}</div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById("shopView").innerHTML = html;
+}
+ 
+function buildShopTabs() {
+  const container = document.getElementById("shopTabs");
+  shopCategories.forEach((cat, i) => {
+    const btn = document.createElement("button");
+    btn.className = "pn-shop-btn " + cat.cls + (i === 0 ? " active" : "");
+    btn.textContent = cat.label;
+    btn.onclick = () => {
+      document.querySelectorAll(".pn-shop-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      shopCurrent = i;
+      renderShop();
+    };
+    container.appendChild(btn);
+  });
+}
+ 
+function buildRecetas() {
+  if (typeof recetas === "undefined" || !recetas.length) return;
+  const container = document.getElementById("recetasList");
+  if (!container) return;
+  recetas.forEach((r, i) => {
+    const div = document.createElement("div");
+    div.className = "pn-receta";
+    div.innerHTML = `
+      <div class="pn-receta-header" onclick="toggleReceta(${i})">
+        <div class="pn-receta-title">${r.emoji} ${r.nombre}</div>
+        <span class="pn-receta-arrow">▸</span>
+      </div>
+      <div class="pn-receta-body">
+        <div class="pn-receta-meta">
+          <span class="pn-receta-meta-pill">${r.tiempo}</span>
+          <span class="pn-receta-meta-pill">${r.raciones}</span>
+          <span class="pn-receta-meta-pill">${r.utensilios}</span>
+        </div>
+        <div class="pn-receta-section">🧺 Ingredientes</div>
+        <div class="pn-receta-ings">${r.ingredientes.map(ing => `<span class="pn-receta-ing">${ing}</span>`).join("")}</div>
+        <div class="pn-receta-section">👨‍🍳 Elaboración</div>
+        <ol class="pn-receta-steps">${r.pasos.map((p,n) => `<li class="pn-receta-step"><span class="pn-receta-step-num">${n+1}</span><span>${p}</span></li>`).join("")}</ol>
+        <div class="pn-receta-tip">${r.tip}</div>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+ 
+function toggleReceta(i) {
+  const cards = document.querySelectorAll(".pn-receta");
+  cards[i].classList.toggle("open");
+}
+ 
+buildTabs();
+render();
+buildSummary();
+buildShopTabs();
+renderShop();
+buildRecetas();
+</script>
+</body>
+</html>
