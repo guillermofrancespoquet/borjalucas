@@ -105,7 +105,7 @@ Banners de deporte (sportClass)
   sportBanner:"Descripción de la sesión y cómo afecta a las comidas",
   suppl:null,                    // null o string con \n (recordatorio de suplementación)
   libre:false,                   // true → banner de cena libre
-  meals:[ { type:"C", time:"14:00", name:"Comida", tags:[], desc:"Línea 1\nLínea 2",
+  meals:[ { type:"C", time:"14:00", name:"Comida", tags:[], recetas:[0], desc:"Línea 1\nLínea 2",
             short:"Resumen corto", note:"Adaptación o consejo", libre:false } ],
   batchCooking:null }            // opcional: { title, items[], note } (domingo)
 ```
@@ -118,6 +118,8 @@ No confundir nunca A con C.
 - `short`: resumen de 2-5 palabras que se muestra en la tabla semanal. Si falta,
   se usa `name`.
 - `tags`: [] | ["extra"] | ["batch"].
+- `recetas`: OPCIONAL. Lista de índices de `recetas[]` (empezando en 0) cuando la comida tiene receta
+  abajo. Ver Sección 4.6.
 - Una comida libre lleva `libre:true` y se pinta como "Libre".
 
 ### 4.2 Tabla semanal
@@ -131,15 +133,28 @@ Cuatro categorías fijas: 🫘 Proteínas (cat-prot) · 🌾 Carbohidratos (cat-
 🥑 Grasas (cat-fat) · 🧄 Extras (cat-extra). Cada ítem: { name, qty }.
 
 ### 4.4 recetas[]
-{ emoji, nombre, tiempo, raciones, utensilios, ingredientes[], pasos[], tip }.
+{ emoji, nombre, corto, tiempo, raciones, utensilios, ingredientes[], pasos[], tip }.
+`corto` es el nombre abreviado que se muestra en la etiqueta del menú por días (Sección 4.6).
 La plantilla trae una receta de relleno ("Receta por definir"): sustituirla o, si el
 cliente no tiene recetas, quitar el array y el bloque HTML de Recetas.
 
 ### 4.5 Regla de JavaScript
 UN único <script> al final del body. Las funciones (badgeClass, render, buildTabs,
-buildSummary, renderShop, buildShopTabs, buildRecetas, toggleReceta) no se modifican
+buildSummary, renderShop, buildShopTabs, buildRecetas, toggleReceta, verReceta) no se modifican
 por cliente; solo cambian los arrays. Llamadas finales, en este orden:
 buildTabs(); render(); buildSummary(); buildShopTabs(); renderShop(); buildRecetas();
+
+
+### 4.6 Indicador de receta
+Para que quien consulta el menú sepa que una comida tiene receta en la sección Recetas:
+- En `days[]`, la comida lleva `recetas: [i, ...]` con los índices de `recetas[]` que le corresponden
+  (puede ser más de una, p. ej. el plato y una opción).
+- Cada receta lleva un `corto` (p. ej. "Overnight de avena"). Si es una opción, añadir "(opción)".
+- `render()` pinta la etiqueta "📖 Receta abajo: [corto]" encima del título de la comida; al
+  pulsarla, `verReceta(i)` abre esa receta y baja hasta ella (respeta prefers-reduced-motion).
+- Estilo: reutiliza `.pn-receta-tag` (con `text-decoration:none` y cursor de enlace).
+- Si el cliente no tiene recetas, quitar el bloque de Recetas y los `recetas:[...]` de las comidas.
+La plantilla trae un ejemplo (Lunes, comida, enlazada a la receta de relleno).
 
 ═══════════════════════════════════════════════════════════════════════════════════
 
@@ -219,7 +234,7 @@ título (13px, 500) + detalle (12px, var(--g400)).
 ✓ Cada comida con `short`, `desc`, `note`; tabla semanal generada (summaryBody vacío en HTML)
 ✓ sportClass válido (run | fuerza | crossfit | rest); tags solo donde corresponde
 ✓ Lista de compra con las 4 categorías y coherente con el menú
-✓ Recetas: receta real o bloque retirado; suplementación y sección personalizada solo si aplican
+✓ Recetas: receta real o bloque retirado; comidas con receta enlazadas con `recetas:[i]` y cada receta con `corto`; suplementación y sección personalizada solo si aplican
 ✓ Objetivo en verde; "base plant-based" (sin "100%") si la dieta es vegetal
 ✓ Puntos de impresiones con colores semáforo; sin azul/lila/rosa fuera de la tabla semanal
 ✓ JS validado con `node --check`; sin errores de consola
@@ -230,3 +245,4 @@ título (13px, 500) + detalle (12px, var(--g400)).
 
 Documento versión 6.0 — Proyecto NUTRILOGOS — Octubre 2026
 Unifica la plantilla v5.0 y el estilo app v1.0 según el flujo de trabajo real.
+Actualización 29/10/2026 (sin cambio de versión): indicador de receta (Sección 4.6).
