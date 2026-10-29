@@ -329,7 +329,7 @@ const days = [
       { type:"A", time:"11:00", name:"Barrita y fruta", tags:[], desc:"Barrita de dátiles y frutos secos (tipo Nakd o Better, 1 ud)\nFruta de temporada (1 pieza)", short:"Barrita + fruta", note:"transportable para el trabajo y casi igual cada día, para que sea fácil de llevar. Fruta: cuantas más piezas, mejor. Si eliges barrita, que sea sencilla (dátiles y frutos secos).", libre:false },
       { type:"C", time:"15:00–15:30", name:"Arroz integral con pechuga de pollo y verduras", tags:[], desc:"Arroz integral (½ taza en crudo, 100 g)\nPechuga de pollo a la plancha (1 grande, 240 g)\nVerduras salteadas (1 plato, 200 g)\nAOVE (1 cucharadita)\nEnsalada de la casa (1 plato pequeño)\nFruta de postre (1 pieza)", short:"Arroz integral + pollo + fruta", note:"pesos en crudo salvo que se indique. Fruta de postre: cuantas más piezas, mejor.", libre:false },
       { type:"Me", time:"17:30", name:"Plátano y zumo de naranja", tags:[], desc:"Plátano mediano (1 ud)\nZumo de naranja natural (1 vaso, 250 ml)\nFrutos secos naturales (1 puñado pequeño, 15 g)", short:"Zumo de naranja + frutos secos + fruta", note:"carga de carbohidrato fácil de llevar. Los días que no te apetezcan tortitas, el zumo de naranja natural es una buena alternativa.", libre:false },
-      { type:"Ce", time:"21:30", name:"Salteado de tofu marinado con verduras y cuscús integral", tags:[], desc:"Tofu firme marinado (1 bloque pequeño, 200 g)\nMarinado: salsa de soja baja en sal, limón, ajo y especias\nCuscús integral (½ taza en crudo, 90 g)\nVerduras salteadas (1 plato grande, 250 g)\nAOVE (1 cucharadita)\nFruta de postre (1 pieza)", short:"Tofu marinado + cuscús + fruta", note:"marina el tofu (soja baja en sal, limón, ajo y especias) al menos 30 minutos antes, mejor desde la noche anterior: gana sabor y textura. Escúrrelo y sécalo antes de dorarlo. Pesos en crudo.", libre:false }
+      { type:"Ce", time:"21:30", name:"Salteado de tofu marinado con verduras y cuscús integral", tags:[], desc:"Tofu firme marinado (1 bloque pequeño, 200 g)\nMarinado: salsa de soja baja en sal, limón, ajo y especias\nCuscús integral (½ taza en crudo, 90 g)\nVerduras salteadas (1 plato grande, 250 g)\nAOVE (1 cucharadita)\nFruta de postre (1 pieza)\nOpción: ensalada de cuscús con gazpacho y tofu marinado (ver receta)", short:"Tofu marinado + cuscús + fruta", note:"marina el tofu (soja baja en sal, limón, ajo y especias) al menos 30 minutos antes, mejor desde la noche anterior: gana sabor y textura. Escúrrelo y sécalo antes de dorarlo. Pesos en crudo. Opcional: ensalada de cuscús con gazpacho y tofu marinado (receta al final), ajustada a tu plan.", libre:false }
     ]
   },
   {
@@ -405,7 +405,7 @@ const days = [
     suppl: null,
     libre: false,
     meals: [
-      { type:"D", time:"7:00–7:15", name:"Tostadas integrales con mermelada y plátano", tags:[], desc:"Pan integral (3 rebanadas, ≈ 90 g)\nMermelada de fruta (1 cucharada colmada, 25 g)\nPlátano pequeño en rodajas por encima (1 ud)\nFruta aparte (1 pieza)\nYogur de soja natural sin azúcar (1 yogur, 125 g)\nCafé o infusión con bebida de soja (1 taza, 200 ml)", short:"Tostadas mermelada + yogur + fruta", note:"se prepara en pocos minutos. Intercalamos tostadas y overnight este mes para ver qué te sienta y te sacia mejor.", libre:false },
+      { type:"D", time:"7:00–7:15", name:"Tostadas integrales con mermelada y plátano", tags:[], desc:"Pan integral (3 rebanadas, ≈ 90 g)\nMermelada de fruta (1 cucharada colmada, 25 g)\nPlátano pequeño en rodajas por encima (1 ud)\nFruta aparte (1 pieza)\nYogur de soja natural sin azúcar (1 yogur, 125 g)\nCafé o infusión con bebida de soja (1 taza, 200 ml)\nOpción: tortitas de avena y plátano (ver receta)", short:"Tostadas mermelada + yogur + fruta", note:"se prepara en pocos minutos. Intercalamos tostadas y overnight este mes para ver qué te sienta y te sacia mejor. Opcional: tortitas de avena y plátano (receta al final), con las cantidades ajustadas a tu plan.", libre:false },
       { type:"A", time:"11:00", name:"Fruta y frutos secos", tags:[], desc:"Fruta de temporada (1 pieza)\nNueces (1 puñado, ≈ 7 nueces, 30 g)", short:"Nueces + fruta", note:"transportable para el trabajo y casi igual cada día, para que sea fácil de llevar. Fruta: cuantas más piezas, mejor. Si eliges barrita, que sea sencilla (dátiles y frutos secos).", libre:false },
       { type:"C", time:"15:00–15:30", name:"Cocido de garbanzos con verduras y pollo", tags:[], desc:"Garbanzos (½ taza en crudo, 100 g)\nPatata (1 grande)\nVerduras del cocido (1 plato, 200 g)\nPollo (150 g)\nAOVE (1 cucharada)\nOlivas (≈ 6 uds)\nEnsalada de la casa (1 plato pequeño)\nFruta de postre (1 pieza)", short:"Cocido garbanzos + pollo + fruta", note:"legumbre: 100 g en crudo ≈ 1 bote grande escurrido (≈ 250 g cocidas); si es de bote, añádela al final. Pesos en crudo salvo que se indique.", libre:false },
       { type:"Me", time:"17:30", name:"Plátano y tortitas", tags:[], desc:"Plátano mediano (1 ud)\nTortitas de maíz o arroz (4 uds)", short:"Tortitas + fruta", note:"fácil de llevar y de carbohidrato rápido; mejor un rato antes de entrenar. Los días sin entreno, mantenla igual de ligera.", libre:false },
@@ -427,7 +427,8 @@ const shopCategories = [
       { name: "Garbanzos (secos o de bote)", qty: "200 g en crudo ≈ 2 botes grandes" },
       { name: "Alubias (secas o de bote)", qty: "100 g en crudo ≈ 1 bote grande" },
       { name: "Fiambre de pavo (para el sándwich)", qty: "60 g" },
-      { name: "Yogur de soja natural sin azúcar", qty: "4 uds de 125 g" }
+      { name: "Yogur de soja natural sin azúcar", qty: "4 uds de 125 g" },
+      { name: "Huevos (opcional: tortitas del domingo)", qty: "2 uds" }
   ]},
   { label: "🌾 Carbohidratos", cls: "cat-carb", items: [
       { name: "Copos de avena", qty: "230 g" },
@@ -461,6 +462,9 @@ const shopCategories = [
       { name: "Bebida de soja sin azúcar", qty: "≈ 2 L" },
       { name: "Cacao en polvo desgrasado", qty: "1 bote pequeño" },
       { name: "Café o infusiones", qty: "al gusto" },
+      { name: "Gazpacho (opcional: ensalada de cuscús del martes)", qty: "150 ml" },
+      { name: "Maíz dulce cocido (opcional: ensalada de cuscús)", qty: "1 lata pequeña" },
+      { name: "Albahaca fresca (opcional: ensalada de cuscús)", qty: "1 puñado" },
       { name: "Salsa de soja baja en sal (marinado del tofu)", qty: "1 botella pequeña" },
       { name: "Limones y ajo (marinado del tofu)", qty: "2 limones y 1 cabeza de ajo" },
       { name: "Especias y hierbas", qty: "al gusto" }
@@ -497,6 +501,26 @@ const recetas = [
     ingredientes: ["Lentejas (½ taza en crudo, 100 g, o 1 bote grande escurrido)", "Patata (1 mediana, 150 g)", "Verduras (1 plato, 200 g): zanahoria, puerro, pimiento", "Pechuga de pollo (1 pequeña, 150 g)", "AOVE (1 cucharada)", "Pimentón y laurel"],
     pasos: ["Sofríe las verduras troceadas en el AOVE 5 minutos.", "Añade el pimentón, las lentejas, la patata en cubos, el laurel y cubre con agua.", "Cuece 25-30 minutos (en olla exprés, unos 12).", "Añade el pollo troceado los últimos 10 minutos y rectifica de sal."],
     tip: "💡 Si usas lentejas de bote, añádelas al final y déjalas solo 10 minutos para que no se deshagan."
+  },
+  {
+    emoji: "🥞",
+    nombre: "Tortitas de avena y plátano (opción para el desayuno del domingo)",
+    tiempo: "⏱ 15 min",
+    raciones: "🍽 1 persona · desayuno completo ≈ 540 kcal (P 28 g · HC 68 g · G 18 g)",
+    utensilios: "🔥 Sartén antiadherente y tenedor o batidora",
+    ingredientes: ["Plátano maduro (1 mediano, 120 g)", "Huevos (2 uds)", "Avena en copos finos o molida (3 cucharadas soperas colmadas, 30 g)", "Canela (al gusto)", "Para acompañar: frutos rojos (1 puñado) y fruta (1 pieza)", "Café o infusión con bebida de soja (1 taza, 200 ml)"],
+    pasos: ["Tritura el plátano con un tenedor o con la batidora hasta obtener una mezcla uniforme.", "Añade los huevos, la avena y la canela. Mezcla bien hasta integrar todo.", "Calienta una sartén antiadherente a fuego medio y vierte pequeñas porciones de la masa.", "Cocina 1-2 minutos por lado, hasta que estén doradas y firmes.", "Sirve con los frutos rojos y la fruta por encima."],
+    tip: "💡 El plátano maduro aporta dulzor natural sin azúcares añadidos. Es una alternativa a las tostadas del domingo; si te apetece, puedes cambiar parte de la fruta por una onza de chocolate negro (mín. 70 %)."
+  },
+  {
+    emoji: "🥗",
+    nombre: "Ensalada de cuscús con gazpacho y tofu marinado (opción para la cena del martes)",
+    tiempo: "⏱ 30 min + marinado del tofu",
+    raciones: "🍽 1 persona · plato + postre de fruta ≈ 760 kcal (P 42 g · HC 103 g · G 20 g)",
+    utensilios: "🔥 Sartén antiadherente y bol",
+    ingredientes: ["Cuscús integral (½ taza en crudo, 90 g)", "Gazpacho (1 vaso pequeño, 150 ml)", "Tofu firme (1 bloque pequeño, 200 g)", "Marinado del tofu: 2 cucharadas de salsa de soja baja en sal, zumo de ½ limón, 1 ajo y especias", "Pepino (½ pequeño, 80 g)", "Tomate (1 pequeño, 100 g)", "Maíz dulce cocido (3 cucharadas soperas, 60 g)", "Albahaca fresca (1 puñado) y limón", "Postre: fruta (1 pieza)"],
+    pasos: ["Corta el tofu en dados y márcalo con el marinado al menos 30 minutos (mejor desde la noche anterior).", "Vierte el gazpacho frío sobre el cuscús seco, tapa y deja hidratar 20 minutos. Remueve con un tenedor para soltar el grano.", "Dora el tofu marinado en una sartén antiadherente 5-6 minutos, volteando hasta que quede dorado por fuera.", "Pica el pepino, el tomate y la albahaca, y añade el maíz escurrido.", "Mezcla las verduras con el cuscús hidratado.", "Incorpora el tofu por encima, aliña con zumo de limón y termina con hojas de albahaca."],
+    tip: "💡 El gazpacho ya aporta líquido, verdura y algo de aceite, por eso no añadimos AOVE (1 cucharadita más suma ≈ 45 kcal). El tomate y el limón (vitamina C) mejoran la absorción del hierro del tofu."
   }
 ];
 

@@ -22,7 +22,7 @@ CLAUDE.md                                     este archivo
 Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú semanal de un vistazo (`#printArea`) → Menú desarrollado por días → Lista de compra semanal → Recetas.
 - Datos en JS: `days[]` (7 días; cada comida con `type`, `time`, `name`, `desc` separado por `\n`, `short`, `note`, `libre`), `shopCategories[]` y `recetas[]`.
 - La tabla semanal se genera desde `short` de cada comida (`buildSummary()`); si cambia una comida, actualizar `short`, `desc`, `note` **y** la lista de compra.
-- Recetas: acordeón al final (`recetas[]`, `buildRecetas()`). Ahora hay 3 (overnight de avena, salteado de tofu con cuscús integral y lentejas estofadas con pollo).
+- Recetas: acordeón al final (`recetas[]`, `buildRecetas()`). Ahora hay 5: overnight de avena, salteado de tofu marinado con cuscús integral, lentejas estofadas con pollo y dos opciones (tortitas de avena y plátano para el desayuno del domingo; ensalada de cuscús con gazpacho y tofu marinado para la cena del martes).
 - Sin suplementación ni batch cooking por ahora (los hooks existen en el JS pero no se usan).
 - Fuera del HTML (la app ya los muestra): descripción del cliente, perfil con métricas y próxima revisión.
 
@@ -67,6 +67,7 @@ Documento de referencia del cliente. La guía v6.0 (Sección 5) indica qué reco
 - **Menú v1 (cálculo con tablas estándar, orientativo):** media semanal ≈ 2688 kcal · P ≈ 151 g · G ≈ 77 g · HC ≈ 350 g; cada día queda a ±3 % de las kcal objetivo. Es una estimación.
 - **Comidas (5):** desayuno 7:00 (lo prepara él) · almuerzo 11:00 (transportable) · comida 15:00 (en casa) · merienda 17:30 (pre-entreno, portable) · cena 21:30 (en casa).
 - **Cantidades y medidas:** gramos con su equivalente en medidas caseras (vasos, tazas, cucharadas, cucharaditas, puñados, piezas). La fruta se da en piezas, sin pesar, y cuantas más, mejor (fuente de fibra, vitaminas y minerales: a más fruta entera en la planificación, mejor para la salud). En la tabla semanal aparece como "+ fruta" al final de `short` en las comidas que la llevan.
+- **Opciones puntuales** (recetas de NutriLogos ajustadas a su plan, no cambian el cálculo base): desayuno del domingo = tortitas de avena y plátano (plátano 120 g, 2 huevos, avena 30 g; con frutos rojos, fruta y café con soja ≈ 540 kcal, P 28 g); cena del martes = ensalada de cuscús con gazpacho y tofu marinado (cuscús integral 90 g, gazpacho 150 ml, tofu 200 g, sin AOVE añadido; con la fruta ≈ 760 kcal, P 42 g). Con cada opción el día queda a ±2 % de las kcal objetivo.
 - **Tofu:** siempre marinado (soja baja en sal, limón, ajo y especias) para mejorar la textura; se introduce poco a poco.
 - **Desayunos:** se intercalan overnight de avena (avena, bebida vegetal o leche semi/desnatada, mix de semillas, frutos rojos o fruta, topping en días de más calorías) y tostadas integrales (hummus con aguacate, tomate o pimiento; o mantequilla de cacahuete o mermelada con plátano) para ver qué funciona mejor este mes.
 - **Almuerzo:** casi igual cada día: fruta con frutos secos, a veces barrita de dátiles y frutos secos (tipo Nakd o Better) y algún sándwich puntual de pan integral con fiambre de pavo.
