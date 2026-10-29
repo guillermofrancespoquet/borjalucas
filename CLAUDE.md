@@ -22,6 +22,7 @@ CLAUDE.md                                     este archivo
 Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú semanal de un vistazo (`#printArea`) → Menú desarrollado por días → Lista de compra semanal → Recetas.
 - Datos en JS: `days[]` (7 días; cada comida con `type`, `time`, `name`, `desc` separado por `\n`, `short`, `note`, `libre`), `shopCategories[]` y `recetas[]`.
 - La tabla semanal se genera desde `short` de cada comida (`buildSummary()`); si cambia una comida, actualizar `short`, `desc`, `note` **y** la lista de compra.
+- Indicador de receta: si una comida tiene receta abajo, su objeto en `days[]` lleva `recetas: [i, ...]` (índices de `recetas[]`) y `render()` muestra la etiqueta "📖 Receta abajo: …", que abre y lleva a esa receta (`verReceta(i)`). Cada receta lleva un nombre `corto` para la etiqueta; las opciones llevan "(opción)".
 - Recetas: acordeón al final (`recetas[]`, `buildRecetas()`). Ahora hay 5: overnight de avena, salteado de tofu marinado con cuscús integral, lentejas estofadas con pollo y dos opciones (tortitas de avena y plátano para el desayuno del domingo; ensalada de cuscús con gazpacho y tofu marinado para la cena del martes).
 - Sin suplementación ni batch cooking por ahora (los hooks existen en el JS pero no se usan).
 - Fuera del HTML (la app ya los muestra): descripción del cliente, perfil con métricas y próxima revisión.
