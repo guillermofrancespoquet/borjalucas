@@ -18,61 +18,53 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--f); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; background: var(--bg); color: var(--g900); padding: 1.5rem; max-width: 860px; margin: 0 auto; }
+  h1 { font-size: 22px; font-weight: 700; color: var(--t900); letter-spacing: -.01em; margin-bottom: 0.25rem; }
+  .subtitle { font-size: 13px; color: var(--g400); margin-bottom: 1.5rem; }
+  .section-label { font-size: 13px; font-weight: 700; color: var(--t800); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--bd); }
 
-  /* ── PLAN SEMANAL ── */
+  /* ── MENÚ POR DÍAS ── */
   .pn-days { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
-  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
-  .pn-day-btn:hover { background: var(--g100); }
-  .pn-day-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
+  .pn-day-btn { padding: 6px 14px; font-size: 13px; border: .5px solid var(--bdm); border-radius: 8px; background: var(--sf); color: var(--g500); font-family: var(--f); font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .pn-day-btn:hover { background: var(--t50); }
+  .pn-day-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
   .pn-meals { display: grid; gap: 10px; }
-  .pn-card { background: var(--sf); border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
+  .pn-card { background: var(--sf); border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); padding: 1rem 1.25rem; }
   .pn-meal-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-  .pn-badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 8px; white-space: nowrap; }
+  .pn-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
   .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
-  .badge-a   { background: var(--t50); color: var(--t800); }
-  .badge-me  { background: var(--pill-n); color: var(--g700); }
-  .badge-c   { background: var(--pill-g); color: var(--t900); }
-  .badge-ce  { background: var(--t800); color: #fff; }
-  .badge-libre { background: var(--gold-50); color: var(--gold-dk); }
+  .badge-a   { background: var(--t50);     color: var(--t800); }
+  .badge-c   { background: var(--pill-g);  color: var(--t900); }
+  .badge-me  { background: var(--pill-n);  color: var(--g700); }
+  .badge-ce  { background: var(--t800);    color: #fff; }
+  .badge-libre { background: var(--pill-au); color: var(--gold-dk); }
   .pn-time { font-size: 12px; color: var(--g400); }
   .pn-name { font-size: 15px; font-weight: 500; color: var(--g900); margin-bottom: 4px; }
-  .pn-note { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; line-height: 1.5; }
-  .pn-extra-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t50); color: var(--t800); border: 1px solid var(--t100); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
-  .pn-batch-tag  { display: inline-block; font-size: 11px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--pill-au); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
-  .pn-receta-tag { display: inline-block; font-size: 11px; font-weight: 500; background: var(--t800); color: #fff; border: 1px solid var(--g200); border-radius: 6px; padding: 2px 8px; margin-bottom: 6px; }
-  .pn-sport-banner { border-radius: 8px; padding: 8px 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-note { font-size: 12px; color: var(--g400); border-left: 2px solid var(--gold); padding-left: 8px; line-height: 1.5; }
+  .pn-extra-tag, .pn-batch-tag, .pn-receta-tag { display: inline-block; font-size: 11px; font-weight: 500; border-radius: 20px; padding: 2px 8px; margin-bottom: 6px; }
+  .pn-extra-tag { background: var(--t50); color: var(--t800); border: 1px solid var(--t100); }
+  .pn-batch-tag { background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--pill-au); }
+  .pn-receta-tag { background: var(--pill-n); color: var(--g700); border: .5px solid var(--g200); text-decoration: none; cursor: pointer; }
+  .pn-receta-tag:hover { background: var(--g200); }
+  .pn-sport-banner, .pn-libre-banner, .pn-supp-banner { border-radius: 12px; font-size: 12px; margin-bottom: 10px; }
+  .pn-sport-banner { padding: 8px 12px; }
   .pn-sport-banner.fuerza   { background: var(--t50); border: 1px solid var(--t100); color: var(--t800); }
   .pn-sport-banner.run      { background: var(--gold-50); border: 1px solid var(--t100); color: var(--t800); }
   .pn-sport-banner.crossfit { background: var(--gold-50); border: 1px solid var(--pill-au); color: var(--gold-dk); }
   .pn-sport-banner.rest     { background: var(--g100); border: 1px solid var(--g200); color: var(--g700); }
-  .pn-libre-banner { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 8px; padding: 8px 12px; font-size: 12px; color: var(--gold-dk); margin-bottom: 10px; }
-  .pn-supp-banner { background: var(--t50); border: 1px solid var(--t100); border-radius: 8px; padding: 10px 14px; font-size: 12px; color: var(--t900); margin-bottom: 10px; line-height: 1.7; }
-  .pn-batch-section { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 10px; }
+  .pn-libre-banner { background: var(--gold-50); border: 1px solid var(--pill-au); padding: 8px 12px; color: var(--gold-dk); }
+  .pn-supp-banner { background: var(--t50); border: 1px solid var(--t100); padding: 10px 14px; color: var(--t900); line-height: 1.7; }
+  .pn-batch-section { background: var(--gold-50); border: 1px solid var(--pill-au); border-radius: 16px; padding: 1rem 1.25rem; margin-bottom: 10px; }
   .pn-batch-section h3 { font-size: 13px; font-weight: 600; color: var(--gold-dk); margin-bottom: 8px; }
   .pn-batch-section ul { padding-left: 1.1rem; font-size: 13px; color: var(--g500); line-height: 1.85; }
-  .pn-batch-section .bc-note { font-size: 12px; color: var(--g400); margin-top: 10px; border-left: 2px solid var(--pill-au); padding-left: 8px; }
+  .pn-batch-section .bc-note { font-size: 12px; color: var(--g400); margin-top: 10px; border-left: 2px solid var(--gold); padding-left: 8px; }
   .pn-legend { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--bdm); }
   .pn-legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--g400); }
-  h1 { font-size: 20px; font-weight: 500; margin-bottom: 0.25rem; }
-  .subtitle { font-size: 13px; color: var(--g400); margin-bottom: 1.5rem; }
+  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+  .pn-ing, .pn-receta-ing, .pn-receta-meta-pill { display: inline-block; font-size: 12px; background: var(--g100); border: .5px solid var(--bd); border-radius: 20px; }
+  .pn-ing { padding: 3px 9px; color: var(--g700); line-height: 1.4; }
 
-  /* ── PERFIL DE LA PERSONA ── */
-  .pn-perfil { margin-bottom: 2rem; }
-  .pn-perfil-header { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.25rem; }
-  .pn-perfil-score { font-size: 12px; font-weight: 500; background: var(--gold-50); color: var(--gold-dk); border: 1px solid var(--t100); border-radius: 8px; padding: 2px 10px; }
-  .pn-perfil-sub { font-size: 13px; color: var(--g400); margin-bottom: 1rem; }
-  .pn-perfil-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
-  .pn-perfil-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  @media (max-width: 600px) {
-    .pn-perfil-grid { grid-template-columns: repeat(2, 1fr); }
-    .pn-perfil-grid-2 { grid-template-columns: 1fr; }
-  }
-  .pn-metric { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
-  .pn-metric-lbl { font-size: 11px; color: var(--g400); margin-bottom: 3px; }
-  .pn-metric-val { font-size: 18px; font-weight: 500; color: var(--g900); }
-  .pn-metric-sub { font-size: 11px; color: var(--g400); margin-top: 2px; }
-  .pn-impresiones { border: 1px solid var(--bdm); border-radius: 12px; padding: 1rem 1.25rem; }
-  .pn-impresiones-title { font-size: 12px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  /* ── IMPRESIONES ── */
+  .pn-impresiones { border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); padding: 1rem 1.25rem; }
   .pn-imp-item { font-size: 13px; color: var(--g700); line-height: 1.65; padding: 0.4rem 0; border-bottom: 1px solid var(--bd); display: flex; gap: 8px; align-items: flex-start; }
   .pn-imp-item:last-child { border-bottom: none; padding-bottom: 0; }
   .pn-imp-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
@@ -80,40 +72,18 @@
   .pn-imp-dot-blue  { background: #185FA5; }
   .pn-imp-dot-amber { background: #BA7517; }
   .pn-imp-dot-coral { background: #993C1D; }
-  .pn-perfil-divider { border: none; border-top: 1px solid var(--bdm); margin: 2.5rem 0; }
-  .pn-perfil-section-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-  @media (max-width: 600px) { .pn-perfil-section-row { grid-template-columns: 1fr; } }
-  .pn-antro-card { background: var(--g100); border-radius: 10px; padding: 0.75rem 1rem; }
-  .pn-antro-card-title { font-size: 11px; font-weight: 500; color: var(--g400); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.6rem; }
-  .pn-antro-row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-bottom: 1px solid var(--bd); color: var(--g500); }
-  .pn-antro-row:last-child { border-bottom: none; }
-  .pn-antro-val { font-weight: 500; color: var(--g900); }
-  .pn-bio-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; padding: 4px 0; border-bottom: 1px solid var(--bd); }
-  .pn-bio-row:last-child { border-bottom: none; }
-  .pn-bio-label { color: var(--g400); }
-  .pn-bio-val { font-weight: 500; color: var(--g900); }
-  .pn-bio-badge { font-size: 10px; padding: 1px 7px; border-radius: 6px; font-weight: 500; }
-  .bio-normal { background: var(--gold-50); color: var(--gold-dk); }
-  .bio-alto   { background: var(--t50); color: var(--t800); }
-  .bio-bajo   { background: var(--gold-50); color: var(--gold-dk); }
-  .pn-soma-card { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; align-items: center; }
-  .pn-soma-num { text-align: center; }
-  .pn-soma-num-val { font-size: 22px; font-weight: 500; color: var(--g900); }
-  .pn-soma-num-lbl { font-size: 10px; color: var(--g400); margin-top: 2px; }
-  .pn-soma-separator { color: var(--g200); font-size: 20px; }
-  .section-label { font-size: 12px; font-weight: 500; color: var(--g500); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--bd); }
 
   /* ── LISTA DE COMPRA ── */
   .pn-shop-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1rem; }
-  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: 1px solid var(--g200); border-radius: 8px; background: transparent; color: var(--g500); cursor: pointer; transition: background 0.15s; }
-  .pn-shop-btn:hover { background: var(--g100); }
-  .pn-shop-btn.active { background: var(--bd); color: var(--g900); border-color: var(--g400); font-weight: 500; }
-  .pn-shop-btn.active.cat-prot  { background: var(--t50); border-color: var(--t100); color: var(--t800); }
+  .pn-shop-btn { padding: 6px 14px; font-size: 13px; border: .5px solid var(--bdm); border-radius: 20px; background: var(--sf); color: var(--g500); font-family: var(--f); font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .pn-shop-btn:hover { background: var(--t50); }
+  .pn-shop-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
+  .pn-shop-btn.active.cat-prot  { background: var(--t50);  border-color: var(--t100);   color: var(--t800); }
   .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
-  .pn-shop-btn.active.cat-fat   { background: var(--gold-50); border-color: var(--t100); color: var(--t800); }
-  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200); color: var(--g700); }
+  .pn-shop-btn.active.cat-fat   { background: var(--pill-g); border-color: var(--t100);  color: var(--t900); }
+  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200);    color: var(--g700); }
   .pn-shop-list { display: grid; gap: 8px; }
-  .pn-shop-item { border: 1px solid var(--bdm); border-radius: 10px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
+  .pn-shop-item { border: .5px solid var(--bdm); border-radius: 14px; padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; transition: background 0.15s, opacity 0.15s; }
   .pn-shop-item.cat-prot  { background: var(--t50); }
   .pn-shop-item.cat-carb  { background: var(--gold-50); }
   .pn-shop-item.cat-fat   { background: #EEF8F3; }
@@ -124,83 +94,40 @@
   .pn-shop-item-name { font-size: 13px; font-weight: 500; color: var(--g900); }
   .pn-shop-item-qty { font-size: 12px; font-weight: 500; color: var(--g500); white-space: nowrap; text-align: right; }
 
-  /* ── INGREDIENTES ENCAPSULADOS EN COMIDAS ── */
-  .pn-ing-list { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
-  .pn-ing { display: inline-block; font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 9px; color: var(--g700); line-height: 1.4; }
-
-  /* ── SUPLEMENTACIÓN ── */
-  .pn-supl-block { background: var(--t50); border: 1px solid var(--t100); border-radius: 12px; padding: 1rem 1.25rem; }
+  /* ── SUPLEMENTACIÓN (solo si se pide) ── */
+  .pn-supl-block { background: var(--t50); border: 1px solid var(--t100); border-radius: 16px; padding: 1rem 1.25rem; }
   .pn-supl-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.5rem 0; border-bottom: 1px solid var(--t100); font-size: 13px; color: var(--g700); line-height: 1.5; }
   .pn-supl-item:last-child { border-bottom: none; padding-bottom: 0; }
   .pn-supl-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--t400); flex-shrink: 0; margin-top: 6px; }
 
   /* ── RECETAS ── */
-  .pn-receta { border: 1px solid var(--bdm); border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
-  .pn-receta-header { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; cursor: pointer; background: var(--bg); transition: background 0.15s; user-select: none; }
-  .pn-receta-header:hover { background: var(--g100); }
+  .pn-receta { border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); overflow: hidden; margin-bottom: 8px; }
+  .pn-receta-header { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1.25rem; cursor: pointer; background: var(--sf); transition: background 0.15s; user-select: none; }
+  .pn-receta-header:hover { background: var(--t50); }
   .pn-receta-title { font-size: 14px; font-weight: 500; color: var(--g900); display: flex; align-items: center; gap: 8px; }
   .pn-receta-arrow { font-size: 12px; color: var(--g400); transition: transform 0.2s; }
   .pn-receta.open .pn-receta-arrow { transform: rotate(90deg); }
   .pn-receta-body { display: none; padding: 1rem 1.25rem; border-top: 1px solid var(--bdm); background: var(--sf); }
   .pn-receta.open .pn-receta-body { display: block; }
   .pn-receta-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem; }
-  .pn-receta-meta-pill { font-size: 11px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g500); }
-  .pn-receta-section { font-size: 11px; font-weight: 600; color: var(--g500); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; margin-top: 0.85rem; }
+  .pn-receta-meta-pill { padding: 3px 10px; color: var(--g500); font-size: 11px; }
+  .pn-receta-section { font-size: 11px; font-weight: 700; color: var(--gold-dk); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.5rem; margin-top: 0.85rem; }
   .pn-receta-ings { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 0.5rem; }
-  .pn-receta-ing { font-size: 12px; background: var(--g100); border: 1px solid var(--bd); border-radius: 6px; padding: 3px 10px; color: var(--g700); }
+  .pn-receta-ing { padding: 3px 10px; color: var(--g700); }
   .pn-receta-steps { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
   .pn-receta-step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--g700); line-height: 1.55; }
-  .pn-receta-step-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--bd); border: 1px solid var(--bd); font-size: 11px; font-weight: 600; color: var(--g500); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .pn-receta-tip { font-size: 12px; color: var(--g400); border-left: 2px solid var(--g200); padding-left: 8px; margin-top: 0.75rem; line-height: 1.5; }
+  .pn-receta-step-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--t50); border: 1px solid var(--t100); font-size: 11px; font-weight: 600; color: var(--t800); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .pn-receta-tip { font-size: 12px; color: var(--g400); border-left: 2px solid var(--gold); padding-left: 8px; margin-top: 0.75rem; line-height: 1.5; }
 
   /* ── BOTÓN IMPRIMIR ── */
-  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--t900); color: var(--sf); border: none; border-radius: 10px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; }
+  .pn-print-btn { display: inline-flex; align-items: center; gap: 7px; background: var(--t900); color: var(--sf); border: none; border-radius: 12px; padding: 10px 20px; font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.02em; font-family: var(--f); }
   .pn-print-btn:hover { background: var(--t800); }
 
-  
-  /* ── ESTILO APP NUTRILOGOS ── */
-  .pn-card, .pn-impresiones, .pn-receta { border: .5px solid var(--bdm); border-radius: 16px; box-shadow: 0 2px 10px rgba(4,52,44,.05); }
-  .pn-card { padding: 1rem 1.25rem; }
-  .pn-day-btn { border-radius: 8px; }
-  .pn-day-btn, .pn-shop-btn { border: .5px solid var(--bdm); border-radius: 20px; background: var(--sf); color: var(--g500); font-family: var(--f); font-weight: 500; }
-  .pn-day-btn { border-radius: 8px; }
-  .pn-day-btn:hover, .pn-shop-btn:hover { background: var(--t50); }
-  .pn-day-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
-  .pn-shop-btn.active { background: var(--t900); color: #fff; border-color: var(--t900); }
-  .pn-shop-btn.active.cat-prot  { background: var(--t50);  border-color: var(--t100);   color: var(--t800); }
-  .pn-shop-btn.active.cat-carb  { background: var(--gold-50); border-color: var(--pill-au); color: var(--gold-dk); }
-  .pn-shop-btn.active.cat-fat   { background: var(--pill-g); border-color: var(--t100);  color: var(--t900); }
-  .pn-shop-btn.active.cat-extra { background: var(--g100); border-color: var(--g200);    color: var(--g700); }
-  .pn-badge { border-radius: 20px; font-weight: 600; }
-  .badge-d   { background: var(--gold-50); color: var(--gold-dk); }
-  .badge-a   { background: var(--t50);     color: var(--t800); }
-  .badge-c   { background: var(--pill-g);  color: var(--t900); }
-  .badge-me  { background: var(--pill-n);  color: var(--g700); }
-  .badge-ce  { background: var(--t800);    color: #fff; }
-  .badge-libre { background: var(--pill-au); color: var(--gold-dk); }
-  .pn-extra-tag, .pn-batch-tag, .pn-receta-tag { border-radius: 20px; }
-  .pn-receta-tag { background: var(--pill-n); color: var(--g700); border: .5px solid var(--g200); }
-  .pn-sport-banner, .pn-libre-banner, .pn-supp-banner { border-radius: 12px; }
-  .pn-supl-block, .pn-batch-section { border-radius: 16px; }
-  .pn-note, .pn-receta-tip, .pn-batch-section .bc-note { border-left-color: var(--gold); }
-  .pn-ing, .pn-receta-ing, .pn-receta-meta-pill { border-radius: 20px; background: var(--g100); border: .5px solid var(--bd); }
-  .pn-receta-step-num { background: var(--t50); border-color: var(--t100); color: var(--t800); }
-  .pn-shop-item { border: .5px solid var(--bdm); border-radius: 14px; }
-  .pn-shop-item.done .pn-shop-item-name { color: var(--g400); }
-  .pn-receta-header { background: var(--sf); }
-  .pn-receta-header:hover { background: var(--t50); }
-  h1 { font-size: 22px; font-weight: 700; color: var(--t900); letter-spacing: -.01em; }
-  .section-label { font-size: 13px; font-weight: 700; color: var(--t800); text-transform: uppercase; letter-spacing: .08em; }
-  .pn-receta-section, .pn-impresiones-title { color: var(--gold-dk); font-weight: 700; }
-  .pn-print-btn { background: var(--t900); border-radius: 12px; font-family: var(--f); }
-  .pn-print-btn:hover { background: var(--t800); }
+  /* ── ACCESIBILIDAD ── */
   button:focus-visible, .pn-shop-item:focus-visible { outline: 2px solid var(--t400); outline-offset: 2px; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
-  .pn-receta-tag { text-decoration: none; cursor: pointer; }
-  .pn-receta-tag:hover { background: var(--g200); }
-
-  /* tabla semanal y su leyenda: estilo original */
+  /* ── TABLA SEMANAL Y SU LEYENDA: colores originales ── */
   #printArea .pn-badge { border-radius: 8px; font-weight: 500; }
   #printArea .badge-d{background:#EAF3DE;color:#3B6D11}#printArea .badge-a{background:#E1F5EE;color:#0F6E56}
   #printArea .badge-me{background:#EEEDFE;color:#3C3489}#printArea .badge-c{background:#FAECE7;color:#993C1D}
@@ -231,7 +158,6 @@
 </head>
 <body>
 
-<!-- BORRADOR previo a la primera consulta: menú, cantidades y lista de compra por definir. -->
 <h1>Planificación Nutricional — Borja Lucas</h1>
 <p class="subtitle">Recomposición corporal · Hábitos sostenibles · Recuperación de pubalgia · CD Soneja (3RFEF)</p>
 
@@ -274,20 +200,14 @@
       <tbody id="summaryBody"></tbody>
     </table>
   </div>
+  <div class="pn-legend" id="tableLegend" style="margin-top:1rem;padding-top:0.75rem;"></div>
 </div>
 
 <div style="margin-top:2.5rem;">
   <div class="section-label">Menú desarrollado por días</div>
   <div class="pn-days" id="dayTabs"></div>
   <div id="dayView"></div>
-  <div class="pn-legend">
-    <span style="font-size:12px;color:#aaa;margin-right:4px;">Comidas:</span>
-    <span class="pn-legend-item"><span class="pn-badge badge-d">D</span> Desayuno</span>
-    <span class="pn-legend-item"><span class="pn-badge badge-a">A</span> Almuerzo</span>
-    <span class="pn-legend-item"><span class="pn-badge badge-c">C</span> Comida</span>
-    <span class="pn-legend-item"><span class="pn-badge badge-me">Me</span> Merienda</span>
-    <span class="pn-legend-item"><span class="pn-badge badge-ce">Ce</span> Cena</span>
-  </div>
+  <div class="pn-legend" id="dayLegend"></div>
 </div>
 
 <div style="margin-top:2.5rem;">
@@ -549,7 +469,7 @@ function render() {
   const d = days[current];
   let html = `<div style="font-size:18px;font-weight:500;color:var(--g900);margin-bottom:8px">${d.full}</div>`;
   html += `<div class="pn-sport-banner ${d.sportClass}">${d.sport} — ${d.sportBanner}</div>`;
-  if (d.libre) html += `<div class="pn-libre-banner">La cena de este día está reservada como comida libre. El resto del día mantiene la base vegetal habitual.</div>`;
+  if (d.libre) html += `<div class="pn-libre-banner">La cena de este día está reservada como comida libre. El resto del día sigue el plan habitual.</div>`;
   if (d.suppl) html += `<div class="pn-supp-banner">` + d.suppl.replace(/\n/g,"<br>") + `</div>`;
   if (d.batchCooking) {
     const bc = d.batchCooking;
@@ -632,6 +552,16 @@ function buildSummary() {
   tbody.innerHTML = html;
 }
 
+function buildLegends() {
+  const names = { D:"Desayuno", A:"Almuerzo", C:"Comida", Me:"Merienda", Ce:"Cena" };
+  const present = Object.keys(names).filter(t => days.some(d => d.meals.some(m => m.type === t)));
+  const items = present.map(t => `<span class="pn-legend-item"><span class="pn-badge badge-${t.toLowerCase()}">${t}</span> ${names[t]}</span>`).join("");
+  [["tableLegend", "Leyenda:"], ["dayLegend", "Comidas:"]].forEach(([id, label]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = `<span style="font-size:12px;color:var(--g400);margin-right:4px;">${label}</span>` + items;
+  });
+}
+
 let shopCurrent = 0;
  
 function renderShop() {
@@ -707,6 +637,7 @@ function toggleReceta(i) {
 buildTabs();
 render();
 buildSummary();
+buildLegends();
 buildShopTabs();
 renderShop();
 buildRecetas();
