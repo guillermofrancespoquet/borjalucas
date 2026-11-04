@@ -13,7 +13,7 @@ Planificación nutricional de un cliente de Guille (NutriLogos). **Repo público
 index.html                                    plan del cliente (HTML autónomo, estilo app NutriLogos); se llama index.html para que Pages lo publique
 Logo.png                                      icono (apple-touch-icon)
 _headers.txt                                  cabeceras de caché (no-cache)
-INSTRUCCIONES_NUTRILOGOS_v6.0.txt            guía unificada: estructura, estilo, datos, proceso y checklist
+INSTRUCCIONES_NUTRILOGOS_v6.1.txt            guía del plan HTML: estructura, estilo, datos, checklist y plantilla
 CLAUDE.md                                     este archivo
 ```
 - `index.html` = plan ya en estilo app (sin versión aparte ni sufijo `_app`).
@@ -28,7 +28,7 @@ Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú se
 - Fuera del HTML (la app ya los muestra): descripción del cliente, perfil con métricas y próxima revisión.
 
 ## Estilo
-- Reglas, datos y checklist: `INSTRUCCIONES_NUTRILOGOS_v6.0.txt` (sustituye a la plantilla v5.0 y al estilo app v1.0). El CSS y el JS están dentro de `index.html`.
+- Reglas, datos y checklist: `INSTRUCCIONES_NUTRILOGOS_v6.1.txt`. El CSS y el JS están dentro de `index.html`.
 - Tras cualquier cambio: comprobar JS con `node --check` (extrayendo el `<script>`), revisar en móvil (~430 px) y escritorio, y que el `@media print` siga intacto.
 
 ## Contexto del cliente (dado por Guille)
@@ -38,7 +38,7 @@ Orden: h1 + subtítulo → Objetivo → Impresiones del profesional → Menú se
 - Según él, el peso y la composición corporal "se le están yendo de las manos".
 
 ## Perfil máster (cuestionarios del 27/10/2026 y valoración del 28/10/2026)
-Documento de referencia del cliente. La guía v6.0 (Sección 5) indica qué recoger.
+Documento de referencia del cliente. La guía v6.1 (Anexo B) indica qué recoger.
 - **Descripción:** hombre · 25 años · 1,93 m · 94,8 kg. Futbolista (CD Soneja, 3RFEF), lesionado por pubalgia. Ocupación: conserje (cubriendo una baja), con semanas alternas de 7:30–14:00 y de 8:00–15:15.
 - **Salud (autodeclarada):** sin enfermedad diagnosticada, medicación, alergias ni intolerancias, y sin problemas digestivos. Lesión actual: pubalgia (fase y tratamiento *por definir*).
 - **Hábitos de alimentación:**
